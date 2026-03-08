@@ -178,12 +178,47 @@
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
 
-        /* === BỔ SUNG CSS: NÚT CUỘN LÊN ĐẦU TRANG (ĐÃ XÓA ZALO, CALL, MESS) === */
-        .floating-action { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
+        /* === NÚT CUỘN LÊN ĐẦU TRANG === */
+        .floating-action { position: fixed; bottom: 30px; right: 30px; z-index: 9998; }
         .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-invert); text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; cursor: pointer; border: none; }
         .scroll-top-btn { background-color: var(--primary); opacity: 0; visibility: hidden; pointer-events: none; transition: 0.4s; transform: translateY(20px);}
         .scroll-top-btn.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);}
         .scroll-top-btn:hover { background-color: var(--red); transform: translateY(-5px); }
+
+        /* === 9. BỔ SUNG CHATBOX TƯ VẤN & BÁO LỖI === */
+        .chat-widget { position: fixed; bottom: 90px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
+        .chat-toggle-btn { width: 55px; height: 55px; border-radius: 50%; background: var(--primary); color: var(--primary-invert); font-size: 1.6rem; border: none; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .chat-toggle-btn:hover { background: var(--red); transform: scale(1.1); color: #fff; }
+        .chat-box { width: 340px; max-width: calc(100vw - 40px); background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px var(--card-shadow-hover); overflow: hidden; transform: translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s ease; margin-bottom: 15px; display: flex; flex-direction: column; height: 420px; }
+        .chat-box.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .chat-header { background: var(--primary); color: var(--primary-invert); padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+        .chat-header button { background: none; border: none; color: var(--primary-invert); cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .chat-header button:hover { color: var(--red); transform: rotate(90deg); }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; }
+        .chat-body::-webkit-scrollbar { width: 5px; }
+        .chat-body::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+        
+        /* Hiển thị xuống dòng cho nội dung tư vấn */
+        .msg { max-width: 85%; padding: 10px 15px; border-radius: 15px; line-height: 1.5; word-wrap: break-word; white-space: pre-wrap; }
+        .bot-msg { background: var(--bg-alt); color: var(--text-color); border-bottom-left-radius: 2px; align-self: flex-start; border: 1px solid var(--border-color); }
+        .user-msg { background: var(--primary); color: var(--primary-invert); border-bottom-right-radius: 2px; align-self: flex-end; }
+        .msg img { max-width: 100%; border-radius: 8px; margin-top: 8px; border: 1px solid var(--border-color); } /* CSS cho ảnh tải lên */
+        
+        .quick-options { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
+        .quick-btn { background: transparent; border: 1px solid var(--primary); color: var(--text-color); padding: 8px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; text-align: left; font-family: var(--font); font-weight: 600;}
+        .quick-btn:hover { background: var(--primary); color: var(--primary-invert); }
+        
+        .chat-input { padding: 12px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; background: var(--bg-color); align-items: center;}
+        
+        /* Chỉnh CSS nút attach ảnh */
+        .chat-input .attach-btn { background: var(--bg-alt); color: var(--text-color); border: 1px solid var(--border-color); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .chat-input .attach-btn:hover { background: var(--border-color); color: var(--primary); }
+        
+        .chat-input input[type="text"] { flex: 1; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 20px; outline: none; background: var(--bg-alt); color: var(--text-color); font-family: var(--font); transition: 0.3s;}
+        .chat-input input[type="text"]:focus { border-color: var(--primary); }
+        
+        .chat-input .send-btn { background: var(--primary); color: var(--primary-invert); border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;}
+        .chat-input .send-btn:hover { background: var(--red); color: #fff; }
 
         /* === 6. ABOUT / BANNER BOTTOM === */
         .about-section { text-align: center; margin: 40px 0 0; padding-top: 60px; border-top: 1px solid var(--border-color); padding-bottom: 60px; }
@@ -424,12 +459,10 @@
            TỐI ƯU HÓA HIỂN THỊ TRÊN ĐIỆN THOẠI (MOBILE)
            ========================================= */
         @media (max-width: 900px) {
-            /* Kích hoạt nút Hamburger và canh lề Logo */
             .mobile-toggle { display: block; }
             .logo-area { gap: 10px; width: 100%; justify-content: flex-start; }
             .logo { font-size: 1.5rem; flex-grow: 1; }
             
-            /* Biến Menu ngang thành Sidebar trượt từ bên phải */
             .menu-row { 
                 position: fixed; top: 0; right: -100%; width: 260px; height: 100vh; 
                 background: var(--bg-color); flex-direction: column; align-items: flex-start; gap: 0;
@@ -440,10 +473,8 @@
             .menu-row li { width: 100%; border-bottom: 1px solid var(--border-color); padding: 15px 0; font-size: 1rem; }
             .menu-row li.active::after { display: none; }
             
-            /* Nút đóng Menu trong Sidebar */
             .close-menu-btn { display: flex; justify-content: space-between; align-items: center; color: var(--red) !important; font-weight: 800; border-bottom: 2px solid var(--border-color) !important; padding-bottom: 20px !important; margin-bottom: 10px; }
             
-            /* Lớp phủ mờ màu đen khi mở Menu */
             .menu-overlay {
                 display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
                 background: rgba(0,0,0,0.6); z-index: 9999; 
@@ -462,6 +493,8 @@
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
             .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
             .floating-action { bottom: 20px; right: 20px; transform: scale(0.8); transform-origin: bottom right;}
+            
+            .chat-widget { bottom: 80px; right: 20px; } /* Điều chỉnh chatbox trên mobile */
         }
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr; }
@@ -721,6 +754,30 @@
         <button class="float-btn scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
     </div>
 
+    <div class="chat-widget">
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <span><i class="fas fa-headset"></i> CSKH Blue Ultra</span>
+                <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="msg bot-msg">Xin chào! Blue Ultra có thể giúp gì cho bạn hôm nay?</div>
+                <div class="quick-options" id="quickOptionsContainer">
+                    <button class="quick-btn" onclick="sendQuickAction('size_color')">📏 Tư vấn Size & Màu sắc</button>
+                    <button class="quick-btn" onclick="sendQuickAction('report_bug')">⚠️ Phản ánh lỗi Website/App</button>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="file" id="chatFileInput" accept="image/*" style="display: none;" onchange="handleChatFileUpload(event)">
+                <button class="attach-btn" onclick="document.getElementById('chatFileInput').click()" title="Đính kèm hình ảnh"><i class="fas fa-paperclip"></i></button>
+                
+                <input type="text" id="chatInputMsg" placeholder="Nhập tin nhắn..." onkeypress="handleChatEnter(event)">
+                <button class="send-btn" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button class="chat-toggle-btn" onclick="toggleChat()" title="Chat với hỗ trợ"><i class="fas fa-comment-dots"></i></button>
+    </div>
+
     <div class="info-modal-overlay" id="infoModalOverlay" onclick="closeInfoModal(event)">
         <div class="info-modal-content" onclick="event.stopPropagation()">
             <button class="close-modal-btn" onclick="closeInfoModal(event)"><i class="fas fa-times"></i></button>
@@ -860,7 +917,7 @@
         }
 
         // ==========================================
-        // BỔ SUNG: LOGIC TÌM KIẾM VÀ SẮP XẾP SẢN PHẨM
+        // TÌM KIẾM VÀ SẮP XẾP SẢN PHẨM
         // ==========================================
         function scrollToProducts(category, btnElement) {
             let menuItems = document.querySelectorAll('.menu-row li');
@@ -879,12 +936,11 @@
             document.getElementById('searchInput').value = '';
             document.getElementById('categoryTitle').innerText = category === 'ALL' ? 'TẤT CẢ SẢN PHẨM' : category;
 
-            // Reset bộ lọc
             document.getElementById('sortSelect').value = 'default';
 
             let filteredData = category === 'ALL' ? products : products.filter(item => item.cat === category); 
             selectedOptions = {}; 
-            currentData = filteredData; // Cập nhật mảng hiện tại
+            currentData = filteredData; 
             renderHTML(filteredData);
 
             setTimeout(() => {
@@ -895,43 +951,33 @@
             }, 50);
         }
 
-        // Hàm sắp xếp theo giá
         function handleSortProducts() {
             let sortValue = document.getElementById('sortSelect').value;
-            let dataToSort = [...currentData]; // Copy mảng hiện tại để không làm hỏng mảng gốc
+            let dataToSort = [...currentData];
 
             if (sortValue === 'price-asc') {
-                dataToSort.sort((a, b) => a.price - b.price); // Thấp đến cao
+                dataToSort.sort((a, b) => a.price - b.price);
             } else if (sortValue === 'price-desc') {
-                dataToSort.sort((a, b) => b.price - a.price); // Cao xuống thấp
+                dataToSort.sort((a, b) => b.price - a.price);
             }
 
             renderHTML(dataToSort);
         }
 
-        // Thực thi tìm kiếm
         function searchProducts(event) {
             let keyword = event.target.value.toLowerCase().trim();
             executeSearch(keyword);
         }
 
-        // Lắng nghe sự kiện Enter cho ô tìm kiếm (Global Search)
-        function handleGlobalSearch(event) {
-            if (event.key === 'Enter') {
-                let keyword = event.target.value.toLowerCase().trim();
-                executeSearch(keyword);
-            }
-        }
-
         function executeSearch(keyword) {
             document.querySelectorAll('.menu-row li').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('sortSelect').value = 'default'; // Reset sort
+            document.getElementById('sortSelect').value = 'default';
 
             if (keyword !== '') {
                 document.getElementById('categoryTitle').innerText = `Kết quả tìm kiếm: "${keyword}"`;
                 let searchData = products.filter(item => item.name.toLowerCase().includes(keyword) || item.cat.toLowerCase().includes(keyword));
                 selectedOptions = {};
-                currentData = searchData; // Lưu lại dữ liệu để lỡ khách muốn sort
+                currentData = searchData;
                 renderHTML(searchData);
                 
                 const titleSection = document.getElementById('categoryTitleArea');
@@ -942,7 +988,7 @@
             }
         }
 
-        // Bổ sung: Cuộn lên đầu trang (Scroll to top)
+        // Cuộn lên đầu trang (Scroll to top)
         window.onscroll = function() {
             let scrollBtn = document.getElementById("scrollTopBtn");
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -1062,10 +1108,131 @@
         }
 
         // ==========================================
+        // BỔ SUNG: LOGIC HOẠT ĐỘNG CHO CHATBOX (UPLOAD & LẶP LẠI TÙY CHỌN & AUTO REPLY)
+        // ==========================================
+        function toggleChat() {
+            document.getElementById('chatBox').classList.toggle('show');
+        }
+
+        function addMessage(text, sender) {
+            const chatBody = document.getElementById('chatBody');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg ${sender}-msg`;
+            // Dùng innerHTML để render thẻ img nếu có
+            msgDiv.innerHTML = text;
+            chatBody.appendChild(msgDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function removeQuickOptions() {
+            const optsContainers = document.querySelectorAll('.quick-options');
+            optsContainers.forEach(opt => opt.remove());
+        }
+
+        // Hàm gọi lại các tùy chọn (Size/Lỗi) khi chat kết thúc 1 phiên
+        function showFollowUpOptions() {
+            setTimeout(() => {
+                addMessage('Bạn có cần hỗ trợ thêm vấn đề nào khác không?', 'bot');
+                const chatBody = document.getElementById('chatBody');
+                const optsDiv = document.createElement('div');
+                optsDiv.className = 'quick-options';
+                optsDiv.innerHTML = `
+                    <button class="quick-btn" onclick="sendQuickAction('size_color')">📏 Tư vấn Size & Màu sắc</button>
+                    <button class="quick-btn" onclick="sendQuickAction('report_bug')">⚠️ Phản ánh lỗi Website/App</button>
+                `;
+                chatBody.appendChild(optsDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1500); // Kích hoạt 1.5s sau câu trả lời trước đó
+        }
+
+        // Xử lý gửi ảnh qua input file
+        function handleChatFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgTag = `<br><img src="${e.target.result}" alt="Uploaded Image">`;
+                    addMessage('Đã tải lên tệp đính kèm: ' + imgTag, 'user');
+                    removeQuickOptions(); // Đảm bảo ẩn các nút nếu còn
+                    
+                    setTimeout(() => {
+                        addMessage('Cảm ơn bạn đã cung cấp hình ảnh. Đội ngũ kỹ thuật của Blue Ultra đang kiểm tra và sẽ phản hồi trong thời gian sớm nhất!', 'bot');
+                        showFollowUpOptions(); // Hiện lại tùy chọn sau khi phản hồi
+                    }, 1000);
+                }
+                reader.readAsDataURL(file);
+                // Reset input
+                event.target.value = '';
+            }
+        }
+
+        function sendQuickAction(actionType) {
+            removeQuickOptions();
+            if (actionType === 'size_color') {
+                addMessage('Tôi muốn tư vấn Size & Màu sắc', 'user');
+                setTimeout(() => {
+                    addMessage('Dạ, để Blue Ultra tư vấn chuẩn nhất cho mọi sản phẩm, bạn vui lòng cung cấp giúp mình:\n1. Tên/Mã sản phẩm bạn đang quan tâm?\n2. Chiều cao & Cân nặng hiện tại?\n3. Bạn thích mặc đồ form dáng ôm sát (fit) hay form rộng rãi (oversize)?', 'bot');
+                }, 600);
+            } else if (actionType === 'report_bug') {
+                addMessage('Tôi muốn báo lỗi Website/App', 'user');
+                setTimeout(() => {
+                    addMessage('Blue Ultra vô cùng xin lỗi vì sự bất tiện này.\nBạn vui lòng bấm vào biểu tượng 📎 (ghim kẹp) bên dưới để gửi hình ảnh màn hình bị lỗi, kèm theo mô tả chi tiết để đội ngũ kỹ thuật có thể xử lý ngay lập tức nhé!', 'bot');
+                }, 600);
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInputMsg');
+            const text = input.value.trim();
+            if (text === '') return;
+            
+            // Lọc text thành chuỗi an toàn để hiển thị
+            const safeText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            addMessage(safeText, 'user');
+            input.value = '';
+            removeQuickOptions(); // Đảm bảo ẩn các nút nếu còn
+            
+            // CHỨC NĂNG TỰ ĐỘNG TRẢ LỜI THEO TỪ KHÓA SẢN PHẨM
+            const lowerInput = text.toLowerCase();
+            let botReply = "";
+
+            if (lowerInput.includes("váy") || lowerInput.includes("sơ mi nữ") || lowerInput.includes("chân váy")) {
+                botReply = "Dạ với các mẫu Thời Trang Nữ, form đồ thiết kế chuẩn dáng tôn eo.\n- Size S: Dưới 48kg, eo dưới 64cm\n- Size M: Từ 48 - 54kg, eo 65-70cm\n- Size L: Từ 55 - 60kg, eo 71-76cm\nBạn đối chiếu xem mình vừa size nào nhé, hoặc cho shop xin số đo cụ thể để tư vấn kỹ hơn ạ!";
+            } 
+            else if (lowerInput.includes("áo polo") || lowerInput.includes("quần tây") || lowerInput.includes("áo khoác")) {
+                botReply = "Dạ với mẫu Thời Trang Nam, form áo quần bên shop mặc rất thoải mái:\n- Size M: 50 - 65kg, chiều cao dưới 1m70\n- Size L: 65 - 75kg, chiều cao 1m70 - 1m78\n- Size XL: 75 - 85kg, chiều cao trên 1m78\nAnh cho em xin chiều cao và cân nặng để em chọn size chuẩn xác nhất nhé!";
+            } 
+            else if (lowerInput.includes("sneaker") || lowerInput.includes("giày")) {
+                botReply = "Dạ mẫu giày Sneaker bên shop là form vừa vặn. Nếu chân bạn bè ngang thì nên nhích lên 1 size (ví dụ bình thường đi 40 thì lấy 41) để đi lại được thoải mái nhất nhé. Bạn thường đi giày size mấy ạ?";
+            } 
+            else if (lowerInput.includes("balo") || lowerInput.includes("túi")) {
+                botReply = "Dạ mẫu Túi/Balo này bên shop được làm từ chất liệu cao cấp chống thấm nước nhẹ, bên trong có nhiều ngăn chống sốc rất tiện lợi. Bạn đang thích màu sắc nào ạ?";
+            } 
+            else if (lowerInput.includes("macbook") || lowerInput.includes("iphone") || lowerInput.includes("tai nghe") || lowerInput.includes("máy") || lowerInput.includes("nồi")) {
+                botReply = "Dạ đối với sản phẩm Công Nghệ / Gia Dụng, Blue Ultra cam kết hàng chính hãng 100%, bảo hành đủ 12 tháng và hỗ trợ 1 đổi 1 trong 30 ngày đầu nếu có lỗi từ nhà sản xuất. Bạn cần tư vấn thêm thông số kỹ thuật nào của dòng này không ạ?";
+            } 
+            else {
+                // NẾU KHÔNG TÌM THẤY TỪ KHÓA SẢN PHẨM NÀO, CHUYỂN SANG NHÂN VIÊN
+                botReply = "Cảm ơn bạn đã phản hồi! Do thông tin này cần kiểm tra chi tiết hơn, tư vấn viên thật của Blue Ultra đã tiếp nhận và sẽ chat trực tiếp với bạn trong vài giây tới nhé ạ.";
+            }
+
+            // Gửi tin nhắn trả lời sau 1 giây
+            setTimeout(() => {
+                addMessage(botReply, 'bot');
+                showFollowUpOptions(); // Hiện lại tùy chọn sau khi phản hồi
+            }, 1000);
+        }
+
+        function handleChatEnter(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        // ==========================================
         // KHỞI CHẠY KHI VỪA VÀO TRANG
         // ==========================================
         window.onload = function() {
-            // Lọc tham số "search" từ URL (NẾU CÓ) - Tính năng Global Search
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
 
@@ -1073,7 +1240,6 @@
                 document.getElementById('searchInput').value = searchQuery;
                 executeSearch(searchQuery);
             } else {
-                // Mặc định
                 document.getElementById('searchInput').value = '';
                 document.getElementById('categoryTitle').innerText = 'TẤT CẢ SẢN PHẨM';
                 renderHTML(products);
