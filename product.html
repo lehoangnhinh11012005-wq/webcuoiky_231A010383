@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Sản Phẩm | Blue Ultra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* === GIỮ NGUYÊN CSS CƠ BẢN TỪ INDEX === */
+        :root {
+            --primary: #000000;
+            --primary-invert: #ffffff;
+            --bg-color: #ffffff;
+            --bg-alt: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --red: #ff3b30;
+            --font: 'Montserrat', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background-color: var(--bg-alt); color: var(--text-color); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1250px; margin: 0 auto; padding: 0 20px; }
+        
+        /* TOPBAR & HEADER (Giống Index) */
+        .topbar { background: var(--primary); color: #fff; padding: 8px 0; overflow: hidden; white-space: nowrap; font-size: 0.85rem; font-weight: 600; }
+        .marquee { display: inline-block; animation: marquee 20s linear infinite; }
+        .marquee span { margin-right: 50px; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .header { position: sticky; top: 0; background: var(--bg-color); border-bottom: 1px solid var(--border-color); z-index: 1000; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 40px; }
+        .logo { font-size: 2rem; font-weight: 900; letter-spacing: -1px; display: flex; align-items: center; gap: 5px; color: var(--text-color); }
+        .menu-row { display: flex; gap: 25px; align-items: center; }
+        .menu-row li { font-weight: 600; font-size: 0.95rem; text-transform: uppercase; cursor: pointer; transition: 0.3s; padding-bottom: 5px; position: relative; }
+        .menu-row li:hover { color: var(--red); }
+
+        .icons { display: flex; align-items: center; gap: 20px; font-size: 1.3rem; }
+        
+        /* THANH TÌM KIẾM TRÊN HEADER */
+        .search-box { position: relative; display: flex; align-items: center; }
+        .search-box input { width: 0; padding: 0; border: none; outline: none; background: transparent; font-family: var(--font); font-size: 0.9rem; transition: var(--transition); border-bottom: 1px solid transparent; color: var(--text-color); }
+        .search-box:hover input, .search-box input:focus, .search-box input:not(:placeholder-shown) { width: 200px; padding: 5px 10px; border-bottom: 1px solid var(--primary); }
+        .search-box i { cursor: pointer; margin-left: 5px; color: var(--text-color); transition: var(--transition); }
+        .search-box:hover i { color: var(--red); }
+
+        .icon-btn { cursor: pointer; transition: var(--transition); position: relative; }
+        .icon-btn:hover { color: var(--red); }
+        .badge { position: absolute; top: -8px; right: -10px; background: var(--red); color: #fff; font-size: 0.7rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* MẶC ĐỊNH ẨN CÁC PHẦN TỬ CỦA MENU MOBILE TRÊN MÀN HÌNH LỚN */
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); margin-right: 15px; }
+        .close-menu-btn { display: none; }
+        .menu-overlay { display: none; }
+
+        /* === CSS RIÊNG CHO TRANG CHI TIẾT SẢN PHẨM === */
+        .breadcrumb { padding: 20px 0; font-size: 0.9rem; color: #666; font-weight: 500; }
+        .breadcrumb a { color: var(--primary); transition: var(--transition); }
+        .breadcrumb a:hover { color: var(--red); }
+        .breadcrumb span { margin: 0 10px; }
+
+        .product-detail-wrapper { background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); padding: 40px; margin-bottom: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        
+        .p-image-col img { width: 100%; border-radius: 8px; object-fit: cover; max-height: 600px; }
+        
+        .p-info-col { display: flex; flex-direction: column; }
+        .p-cat { font-size: 1rem; color: #888; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
+        .p-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 15px; line-height: 1.2; }
+        .p-price { font-size: 2rem; font-weight: 900; color: var(--red); margin-bottom: 25px; }
+        .p-desc { font-size: 1rem; line-height: 1.6; color: #555; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); }
+
+        /* Option box tái sử dụng */
+        .opt-box { margin-bottom: 25px; }
+        .opt-label { font-size: 1rem; font-weight: 600; margin-bottom: 12px; display: block; }
+        .opt-list { display: flex; gap: 10px; flex-wrap: wrap; }
+        .opt-pill { padding: 10px 20px; border: 2px solid var(--border-color); border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; background: var(--bg-color); }
+        .opt-pill:hover { border-color: var(--primary); }
+        .opt-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        .qty-box { margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+        .qty-label { font-size: 1rem; font-weight: 600; }
+        .qty-controls { display: flex; border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; }
+        .qty-btn { width: 40px; height: 40px; background: var(--bg-alt); border: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
+        .qty-btn:hover { background: #e0e0e0; }
+        .qty-input { width: 60px; height: 40px; border: none; text-align: center; font-size: 1.1rem; font-weight: bold; outline: none; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); }
+
+        .action-buttons { display: flex; gap: 15px; margin-top: auto; }
+        .btn-add-cart { flex: 2; padding: 18px; background: var(--primary); color: var(--primary-invert); border: none; font-weight: bold; text-transform: uppercase; cursor: pointer; border-radius: 6px; font-family: var(--font); transition: 0.3s; font-size: 1.1rem; }
+        .btn-add-cart:hover { background: var(--red); color: #fff; }
+        .btn-wishlist { flex: 1; padding: 18px; background: var(--bg-color); color: var(--primary); border: 2px solid var(--primary); font-weight: bold; text-transform: uppercase; cursor: pointer; border-radius: 6px; font-family: var(--font); transition: 0.3s; font-size: 1.1rem; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-wishlist:hover { background: var(--bg-alt); }
+        .btn-wishlist.active { color: var(--red); border-color: var(--red); }
+
+        /* BỔ SUNG: GỢI Ý SẢN PHẨM CÙNG DANH MỤC */
+        .related-products-section { margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 40px; margin-bottom: 80px; }
+        .related-title { font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 30px; text-align: center; color: var(--primary); }
+        .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        .related-card { background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; cursor: pointer; text-decoration: none; color: inherit; }
+        .related-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); border-color: var(--primary); }
+        .related-img { width: 100%; height: 250px; object-fit: cover; }
+        .related-info { padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .related-name { font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; transition: 0.3s; }
+        .related-card:hover .related-name { color: var(--red); }
+        .related-price { font-size: 1.2rem; font-weight: 900; color: var(--red); }
+
+        /* CHỈ CÒN NÚT SCROLL TO TOP */
+        .floating-action { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
+        .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-invert); text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; cursor: pointer; border: none; }
+        .scroll-top-btn { background-color: var(--primary); opacity: 0; visibility: hidden; pointer-events: none; transition: 0.4s; transform: translateY(20px);}
+        .scroll-top-btn.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);}
+        .scroll-top-btn:hover { background-color: var(--red); transform: translateY(-5px); }
+
+        /* TOAST */
+        #toast-container { position: fixed; top: 100px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: var(--primary); color: var(--primary-invert); padding: 15px 25px; border-radius: 6px; font-weight: 600; display: flex; align-items: center; gap: 12px; animation: slideIn 0.4s ease, fadeOut 0.5s ease 2.5s forwards; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .toast.success { border-left: 5px solid #4CAF50; }
+        .toast.error { border-left: 5px solid #f44336; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+
+        /* =========================================
+           TỐI ƯU HÓA HIỂN THỊ TRÊN ĐIỆN THOẠI (MOBILE)
+           ========================================= */
+        @media (max-width: 900px) {
+            .mobile-toggle { display: block; }
+            .logo-area { gap: 10px; width: 100%; justify-content: flex-start; }
+            .logo { font-size: 1.5rem; flex-grow: 1; }
+            
+            .menu-row { 
+                position: fixed; top: 0; right: -100%; width: 260px; height: 100vh; 
+                background: var(--bg-color); flex-direction: column; align-items: flex-start; gap: 0;
+                padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); 
+                transition: right 0.4s ease; z-index: 10000; 
+            }
+            .menu-row.active { right: 0; } 
+            .menu-row li { width: 100%; border-bottom: 1px solid var(--border-color); padding: 15px 0; font-size: 1rem; }
+            .menu-row li.active::after { display: none; }
+            
+            .close-menu-btn { display: flex; justify-content: space-between; align-items: center; color: var(--red) !important; font-weight: 800; border-bottom: 2px solid var(--border-color) !important; padding-bottom: 20px !important; margin-bottom: 10px; }
+            
+            .menu-overlay {
+                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.6); z-index: 9999; 
+                opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(2px);
+            }
+            .menu-overlay.active { opacity: 1; visibility: visible; }
+
+            .product-detail-wrapper { grid-template-columns: 1fr; padding: 20px; gap: 30px;}
+            .action-buttons { flex-direction: column; }
+            .related-grid { grid-template-columns: repeat(2, 1fr); }
+            .floating-action { bottom: 20px; right: 20px; transform: scale(0.8); transform-origin: bottom right;}
+        }
+        @media (max-width: 600px) {
+            .related-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="marquee">
+            <span>🚀 CHÀO MỪNG ĐẾN VỚI BLUE ULTRA - LOCAL BRAND STREETWEAR HÀNG ĐẦU</span>
+            <span>🔥 MIỄN PHÍ GIAO HÀNG CHO ĐƠN TỪ 500K</span>
+            <span>📞 HOTLINE HỖ TRỢ: 0345541232</span>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-area">
+                <i class="fas fa-bars mobile-toggle" onclick="toggleMobileMenu()"></i>
+
+                <a href="index.html" class="logo">BLUE ULTRA</a>
+                
+                <div class="menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+
+                <ul class="menu-row" id="mainMenu">
+                    <li class="close-menu-btn" onclick="toggleMobileMenu()">
+                        <span>MENU</span> <i class="fas fa-times" style="font-size: 1.5rem;"></i>
+                    </li>
+                    <li><a href="index.html">TRANG CHỦ</a></li>
+                    <li><a href="index.html">SẢN PHẨM</a></li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="orders.html">ĐƠN HÀNG CỦA TÔI</a></li>
+                </ul>
+            </div>
+            <div class="icons">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm (Nhấn Enter)..." onkeypress="handleGlobalSearch(event)">
+                    <i class="fas fa-search" onclick="document.getElementById('searchInput').focus()"></i>
+                </div>
+
+                <a href="wishlist.html" class="icon-btn" title="Yêu thích">
+                    <i class="far fa-heart"></i>
+                    <span class="badge" id="wishCountDisplay">0</span>
+                </a>
+                <a href="cart.html" class="icon-btn" title="Giỏ hàng">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cartCountDisplay">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumb" id="breadcrumb">
+            <a href="index.html">Trang chủ</a> <span>/</span> Đang tải...
+        </div>
+
+        <div class="product-detail-wrapper" id="productDetailRender">
+            </div>
+
+        <div class="related-products-section">
+            <h2 class="related-title">Có thể bạn cũng thích</h2>
+            <div class="related-grid" id="relatedProductsRender">
+                </div>
+        </div>
+
+    </main>
+
+    <div class="floating-action">
+        <button class="float-btn scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+        // --- TÍNH NĂNG MENU TRÊN MOBILE ---
+        function toggleMobileMenu() {
+            document.getElementById('mainMenu').classList.toggle('active');
+            document.getElementById('menuOverlay').classList.toggle('active');
+        }
+
+        // --- TÍNH NĂNG TÌM KIẾM LIÊN TRANG (GLOBAL SEARCH) ---
+        function handleGlobalSearch(event) {
+            if (event.key === 'Enter') {
+                let keyword = event.target.value.toLowerCase().trim();
+                if (keyword !== '') {
+                    window.location.href = `index.html?search=${encodeURIComponent(keyword)}`;
+                }
+            }
+        }
+
+        // --- SCROLL TO TOP ---
+        window.onscroll = function() {
+            let scrollBtn = document.getElementById("scrollTopBtn");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.classList.add("show");
+            } else {
+                scrollBtn.classList.remove("show");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 1. DỮ LIỆU SẢN PHẨM
+        const products = [
+            { id:"t1", cat:"CÔNG NGHỆ", name:"Macbook Pro M3", price:39990000, img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800", options: { type: 'Màu sắc', values: ['Bạc', 'Xám', 'Đen'] } },
+            { id:"t2", cat:"CÔNG NGHỆ", name:"iPhone 15 Pro Max", price:29500000, img:"https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800", options: { type: 'Màu sắc', values: ['Titan Tự Nhiên', 'Titan Xanh', 'Titan Đen'] } },
+            { id:"t3", cat:"CÔNG NGHỆ", name:"Tai nghe Sony WH1000XM5", price:7490000, img:"https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800", options: { type: 'Màu sắc', values: ['Đen', 'Bạc'] } },
+            { id:"m1", cat:"NAM", name:"Áo Polo Nam", price:350000, img:"https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800", options: { type: 'Size', values: ['S', 'M', 'L', 'XL'] } },
+            { id:"m2", cat:"NAM", name:"Quần Tây Nam", price:420000, img:"https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800", options: { type: 'Size', values: ['29', '30', '31', '32'] } },
+            { id:"m3", cat:"NAM", name:"Áo Khoác Da Nam", price:1250000, img:"https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800", options: { type: 'Size', values: ['M', 'L', 'XL'] } },
+            { id:"w1", cat:"NỮ", name:"Váy Lụa Nữ", price:850000, img:"https://kenh14cdn.com/203336854389633024/2022/4/7/allure-2x--sage-16493076836122039033757.jpg", options: { type: 'Size', values: ['S', 'M', 'L'] } },
+            { id:"w2", cat:"NỮ", name:"Áo Sơ Mi Nữ", price:280000, img:"https://tse2.mm.bing.net/th/id/OIP.2ZgdAgWHGx1K7sVZbseGHwHaH_?pid=ImgDet&w=187&h=201&c=7&dpr=1.3&o=7&rm=3", options: { type: 'Size', values: ['S', 'M', 'L', 'XL'] } },
+            { id:"w3", cat:"NỮ", name:"Chân Váy Tennis", price:220000, img:"https://images.unsplash.com/photo-1582142306909-195724d33ffc?w=800", options: { type: 'Size', values: ['S', 'M'] } },
+            { id:"s1", cat:"GIÀY TÚI", name:"Sneaker Đỏ", price:1100000, img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800", options: { type: 'Size', values: ['39', '40', '41', '42', '43'] } },
+            { id:"s2", cat:"GIÀY TÚI", name:"Balo Laptop", price:450000, img:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800", options: { type: 'Màu sắc', values: ['Đen', 'Xám', 'Xanh Navy'] } },
+            { id:"s3", cat:"GIÀY TÚI", name:"Túi Xách Mini", price:650000, img:"https://img.websosanh.vn/v10/users/review/images/nrkfqhbhys5fd/tui-xach-mini.jpg?compress=85" },
+            { id:"h1", cat:"GIA DỤNG", name:"Máy Xay Sinh Tố", price:890000, img:"https://images.unsplash.com/photo-1585515320310-259814833e62?w=800", options: { type: 'Dung tích', values: ['1.5 Lít', '2 Lít'] } },
+            { id:"h2", cat:"GIA DỤNG", name:"Nồi Chiên Không Dầu", price:1750000, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbJX3T0S4QlhyT_IivqCxI4bEWb-ONIHtXoQ&s", options: { type: 'Dung tích', values: ['4.5 Lít', '6.5 Lít'] } },
+            { id:"h3", cat:"GIA DỤNG", name:"Máy Lọc Không Khí", price:2450000, img:"https://th.bing.com/th/id/OIP.C3J02QHrsvvYZZiMQDcGWAHaE-?w=261&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" }
+        ];
+
+        function formatPrice(price){ return price.toLocaleString("vi-VN")+" đ" }
+
+        // 2. LẤY SẢN PHẨM TỪ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentProductId = urlParams.get('id');
+        
+        if (!currentProductId || !products.find(p => p.id === currentProductId)) {
+            currentProductId = 't1'; 
+        }
+
+        const currentProduct = products.find(p => p.id === currentProductId);
+        let selectedDetailOption = null;
+        let currentQty = 1;
+
+        // 3. RENDER GIAO DIỆN CHI TIẾT VÀ GỢI Ý CÙNG DANH MỤC
+        function renderProductDetail() {
+            const container = document.getElementById('productDetailRender');
+            const breadcrumb = document.getElementById('breadcrumb');
+            const wishList = getWishlist();
+            const isFavorite = wishList.some(item => item.id === currentProduct.id);
+
+            // Cập nhật Breadcrumb
+            breadcrumb.innerHTML = `<a href="index.html">Trang chủ</a> <span>/</span> <a href="index.html">${currentProduct.cat}</a> <span>/</span> ${currentProduct.name}`;
+
+            // Render Options
+            let optionsHTML = '';
+            if(currentProduct.options) {
+                let pills = currentProduct.options.values.map(val => 
+                    `<span class="opt-pill" onclick="selectDetailOption(this, '${val}')">${val}</span>`
+                ).join('');
+                
+                optionsHTML = `
+                    <div class="opt-box">
+                        <span class="opt-label">Chọn ${currentProduct.options.type}:</span>
+                        <div class="opt-list">${pills}</div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="p-image-col">
+                    <img src="${currentProduct.img}" alt="${currentProduct.name}">
+                </div>
+                <div class="p-info-col">
+                    <div class="p-cat">${currentProduct.cat}</div>
+                    <h1 class="p-title">${currentProduct.name}</h1>
+                    <div class="p-price">${formatPrice(currentProduct.price)}</div>
+                    
+                    <div class="p-desc">
+                        Sản phẩm <strong>${currentProduct.name}</strong> chính hãng từ Blue Ultra. 
+                        Cam kết chất lượng cao cấp, thiết kế hiện đại, phù hợp với xu hướng mới nhất. 
+                        Bảo hành đầy đủ theo chính sách của cửa hàng.
+                    </div>
+
+                    ${optionsHTML}
+
+                    <div class="qty-box">
+                        <span class="qty-label">Số lượng:</span>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                            <input type="text" class="qty-input" id="qtyInput" value="1" readonly>
+                            <button class="qty-btn" onclick="changeQty(1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-add-cart" onclick="addToCartDetail()">
+                            <i class="fas fa-cart-plus"></i> THÊM VÀO GIỎ HÀNG
+                        </button>
+                        <button class="btn-wishlist ${isFavorite ? 'active' : ''}" onclick="toggleDetailWishlist()">
+                            <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i> YÊU THÍCH
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // RENDER KHU VỰC GỢI Ý CÙNG DANH MỤC
+            renderRelatedProducts();
+        }
+
+        // BỔ SUNG LỌC SẢN PHẨM GỢI Ý
+        function renderRelatedProducts() {
+            const relatedContainer = document.getElementById('relatedProductsRender');
+            
+            // Lọc ra các sản phẩm cùng Danh mục (cat), loại trừ sản phẩm đang xem
+            let relatedData = products.filter(p => p.cat === currentProduct.cat && p.id !== currentProduct.id);
+            
+            // Nếu không đủ sản phẩm cùng loại, lấy ngẫu nhiên cho đủ 3 (tùy chọn)
+            if (relatedData.length === 0) {
+                document.querySelector('.related-products-section').style.display = 'none';
+                return;
+            }
+
+            // Lấy tối đa 3 sản phẩm đầu tiên
+            let displayRelated = relatedData.slice(0, 3);
+
+            relatedContainer.innerHTML = displayRelated.map(p => `
+                <a href="product.html?id=${p.id}" class="related-card">
+                    <img src="${p.img}" alt="${p.name}" class="related-img">
+                    <div class="related-info">
+                        <div class="related-name">${p.name}</div>
+                        <div class="related-price">${formatPrice(p.price)}</div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // 4. LOGIC CHỌN OPTION VÀ SỐ LƯỢNG
+        function selectDetailOption(element, value) {
+            let siblings = element.parentElement.children;
+            for(let el of siblings) el.classList.remove('active');
+            element.classList.add('active');
+            selectedDetailOption = value;
+        }
+
+        function changeQty(amount) {
+            currentQty += amount;
+            if(currentQty < 1) currentQty = 1;
+            document.getElementById('qtyInput').value = currentQty;
+        }
+
+        // 5. LOGIC GIỎ HÀNG & YÊU THÍCH
+        function getCart(){ return JSON.parse(localStorage.getItem("zenith_cart")) || [] }
+        function saveCart(cart){ localStorage.setItem("zenith_cart",JSON.stringify(cart)); updateCounts(); }
+        
+        function getWishlist(){ return JSON.parse(localStorage.getItem("zenith_wishlist")) || [] }
+        function saveWishlist(list){ localStorage.setItem("zenith_wishlist", JSON.stringify(list)); updateCounts(); }
+
+        function updateCounts() {
+            document.getElementById('cartCountDisplay').innerText = getCart().reduce((s,i) => s + i.qty, 0);
+            document.getElementById('wishCountDisplay').innerText = getWishlist().length;
+        }
+
+        function toggleDetailWishlist() {
+            let list = getWishlist();
+            let index = list.findIndex(item => item.id === currentProduct.id);
+
+            if(index > -1) {
+                list.splice(index, 1);
+                showToast(`Đã xóa <strong>${currentProduct.name}</strong> khỏi yêu thích`, 'error', 'fa-heart-broken');
+            } else {
+                list.push(currentProduct);
+                showToast(`Đã thêm <strong>${currentProduct.name}</strong> vào yêu thích!`, 'success', 'fa-heart');
+            }
+            saveWishlist(list);
+            renderProductDetail(); // Cập nhật lại màu nút trái tim
+        }
+
+        function addToCartDetail() {
+            if (currentProduct.options && !selectedDetailOption) {
+                showToast(`Vui lòng chọn ${currentProduct.options.type} trước khi thêm!`, 'error', 'fa-exclamation-circle');
+                return; 
+            }
+
+            let cart = getCart();
+            let cartItemId = selectedDetailOption ? `${currentProduct.id}-${selectedDetailOption}` : currentProduct.id; 
+            
+            let index = cart.findIndex(i => i.cartItemId === cartItemId);
+            if(index > -1){
+                cart[index].qty += currentQty;
+            } else {
+                cart.push({ 
+                    id: currentProduct.id, 
+                    cartItemId: cartItemId, 
+                    option: selectedDetailOption, 
+                    qty: currentQty, 
+                    price: currentProduct.price, 
+                    name: currentProduct.name, 
+                    image: currentProduct.img 
+                });
+            }
+            saveCart(cart);
+            
+            let optText = selectedDetailOption ? ` (${selectedDetailOption})` : '';
+            showToast(`Đã thêm ${currentQty} x <strong>${currentProduct.name}${optText}</strong> vào giỏ!`, 'success', 'fa-check-circle');
+        }
+
+        function showToast(message, type = 'success', iconName) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            let color = type === 'success' ? '#4CAF50' : '#f44336';
+            toast.innerHTML = `<i class="fas ${iconName}" style="color:${color}"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Khởi chạy
+        renderProductDetail();
+        updateCounts();
+    </script>
+</body>
+</html>

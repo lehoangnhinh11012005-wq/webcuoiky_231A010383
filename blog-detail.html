@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đọc Bài Viết | Blue Ultra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* === GIỮ NGUYÊN CSS CƠ BẢN TỪ INDEX === */
+        :root {
+            --primary: #000000;
+            --bg-color: #ffffff;
+            --bg-alt: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --red: #ff3b30;
+            --font: 'Montserrat', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background-color: var(--bg-alt); color: var(--text-color); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1250px; margin: 0 auto; padding: 0 20px; }
+        
+        /* TOPBAR & HEADER */
+        .topbar { background: var(--primary); color: #fff; padding: 8px 0; overflow: hidden; white-space: nowrap; font-size: 0.85rem; font-weight: 600; }
+        .marquee { display: inline-block; animation: marquee 20s linear infinite; }
+        .marquee span { margin-right: 50px; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .header { position: sticky; top: 0; background: var(--bg-color); border-bottom: 1px solid var(--border-color); z-index: 1000; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 40px; }
+        .logo { font-size: 2rem; font-weight: 900; letter-spacing: -1px; display: flex; align-items: center; gap: 5px; color: var(--text-color); }
+        
+        .menu-row { display: flex; gap: 25px; align-items: center; }
+        .menu-row li { font-weight: 600; font-size: 0.95rem; text-transform: uppercase; cursor: pointer; transition: 0.3s; padding-bottom: 5px; position: relative; }
+        .menu-row li:hover { color: var(--red); }
+
+        .icons { display: flex; align-items: center; gap: 20px; font-size: 1.3rem; }
+        .search-box { position: relative; display: flex; align-items: center; }
+        .search-box input { width: 0; padding: 0; border: none; outline: none; background: transparent; font-family: var(--font); font-size: 0.9rem; transition: var(--transition); border-bottom: 1px solid transparent; color: var(--text-color); }
+        .search-box:hover input, .search-box input:focus, .search-box input:not(:placeholder-shown) { width: 200px; padding: 5px 10px; border-bottom: 1px solid var(--primary); }
+        .search-box i { cursor: pointer; margin-left: 5px; color: var(--text-color); transition: var(--transition); }
+        .search-box:hover i { color: var(--red); }
+        
+        .icon-btn { cursor: pointer; transition: var(--transition); position: relative; }
+        .icon-btn:hover { color: var(--red); }
+        .badge { position: absolute; top: -8px; right: -10px; background: var(--red); color: #fff; font-size: 0.7rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); margin-right: 15px; }
+        .close-menu-btn { display: none; }
+        .menu-overlay { display: none; }
+
+        /* === CSS RIÊNG CHO TRANG CHI TIẾT BÀI VIẾT (BLOG DETAIL) === */
+        .breadcrumb { padding: 20px 0; font-size: 0.9rem; color: #666; font-weight: 500; }
+        .breadcrumb a { color: var(--primary); transition: var(--transition); }
+        .breadcrumb a:hover { color: var(--red); }
+        .breadcrumb span { margin: 0 10px; }
+
+        .article-container { max-width: 850px; margin: 0 auto 80px; background: var(--bg-color); padding: 50px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+        
+        .article-cat { display: inline-block; padding: 5px 12px; background: var(--primary); color: #fff; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; border-radius: 4px; margin-bottom: 15px; }
+        .article-title { font-size: 2.5rem; font-weight: 900; line-height: 1.3; margin-bottom: 20px; color: var(--primary); }
+        .article-meta { font-size: 0.95rem; color: #888; font-weight: 600; margin-bottom: 30px; display: flex; gap: 20px; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .article-meta i { color: var(--red); }
+
+        .article-hero { width: 100%; max-height: 500px; object-fit: cover; border-radius: 8px; margin-bottom: 40px; }
+        
+        .article-content { font-size: 1.1rem; line-height: 1.8; color: #444; }
+        .article-content p { margin-bottom: 20px; text-align: justify; }
+        .article-content h3 { margin: 35px 0 15px; color: var(--primary); font-weight: 800; font-size: 1.6rem; }
+        .article-content img { width: 100%; border-radius: 8px; margin: 20px 0; object-fit: cover; }
+        .article-content blockquote { font-style: italic; border-left: 4px solid var(--red); padding-left: 20px; margin: 30px 0; color: #555; background: var(--bg-alt); padding: 20px; border-radius: 0 8px 8px 0; }
+        .article-content ul { padding-left: 20px; margin-bottom: 20px; list-style-type: disc; }
+        .article-content li { margin-bottom: 10px; }
+
+        /* BÌNH LUẬN */
+        .comments-section { margin-top: 60px; border-top: 2px solid var(--border-color); padding-top: 40px; }
+        .comments-title { font-size: 1.5rem; font-weight: 900; margin-bottom: 25px; text-transform: uppercase; }
+        
+        .comment-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; background: var(--bg-alt); padding: 25px; border-radius: 8px; }
+        .comment-input-row { display: flex; gap: 15px; }
+        .comment-input-row input { flex: 1; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; font-family: var(--font); outline: none; }
+        .comment-textarea { width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: var(--font); font-size: 1rem; resize: vertical; min-height: 100px; outline: none; }
+        .comment-textarea:focus, .comment-input-row input:focus { border-color: var(--primary); }
+        .btn-comment { align-self: flex-end; padding: 12px 30px; background: var(--primary); color: #fff; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .btn-comment:hover { background: var(--red); }
+
+        .comment-list { display: flex; flex-direction: column; gap: 20px; }
+        .comment-item { display: flex; gap: 15px; padding: 20px; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; }
+        .comment-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff; font-weight: bold; flex-shrink: 0; }
+        .comment-body h4 { font-size: 1rem; font-weight: 800; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .comment-date { font-size: 0.8rem; color: #888; font-weight: 500; }
+        .comment-body p { font-size: 0.95rem; color: #555; line-height: 1.6; margin: 0; }
+
+        /* NÚT SCROLL TO TOP MỚI (Đã xóa liên hệ) */
+        .floating-action { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
+        .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; cursor: pointer; border: none; }
+        .float-btn:hover { transform: scale(1.1); }
+        .scroll-top-btn { background-color: var(--primary); color: var(--primary-invert); opacity: 0; visibility: hidden; pointer-events: none; transition: 0.4s; transform: translateY(20px);}
+        .scroll-top-btn.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);}
+
+        /* TOAST */
+        #toast-container { position: fixed; top: 100px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: var(--primary); color: #fff; padding: 15px 25px; border-radius: 6px; font-weight: 600; display: flex; align-items: center; gap: 12px; animation: slideIn 0.4s ease, fadeOut 0.5s ease 2.5s forwards; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .toast.success { border-left: 5px solid #4CAF50; }
+
+        @media (max-width: 900px) {
+            .mobile-toggle { display: block; }
+            .logo-area { gap: 10px; width: 100%; justify-content: flex-start; }
+            .logo { font-size: 1.5rem; flex-grow: 1; }
+            .menu-row { position: fixed; top: 0; right: -100%; width: 260px; height: 100vh; background: var(--bg-color); flex-direction: column; align-items: flex-start; gap: 0; padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.4s ease; z-index: 10000; }
+            .menu-row.active { right: 0; } 
+            .menu-row li { width: 100%; border-bottom: 1px solid var(--border-color); padding: 15px 0; font-size: 1rem; }
+            .close-menu-btn { display: flex; justify-content: space-between; align-items: center; color: var(--red) !important; font-weight: 800; border-bottom: 2px solid var(--border-color) !important; padding-bottom: 20px !important; margin-bottom: 10px; }
+            .menu-overlay { display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(2px); }
+            .menu-overlay.active { opacity: 1; visibility: visible; }
+            .article-container { padding: 20px; margin-top: 10px; }
+            .article-title { font-size: 1.8rem; }
+            .comment-input-row { flex-direction: column; }
+            .floating-action { bottom: 20px; right: 20px; transform: scale(0.8); transform-origin: bottom right;}
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="marquee">
+            <span>🚀 CHÀO MỪNG ĐẾN VỚI BLUE ULTRA - LOCAL BRAND STREETWEAR HÀNG ĐẦU</span>
+            <span>🔥 MIỄN PHÍ GIAO HÀNG CHO ĐƠN TỪ 500K</span>
+            <span>📞 HOTLINE HỖ TRỢ: 0345541232</span>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-area">
+                <i class="fas fa-bars mobile-toggle" onclick="toggleMobileMenu()"></i>
+                <a href="index.html" class="logo">BLUE ULTRA</a>
+                <div class="menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+                <ul class="menu-row" id="mainMenu">
+                    <li class="close-menu-btn" onclick="toggleMobileMenu()">
+                        <span>MENU</span> <i class="fas fa-times" style="font-size: 1.5rem;"></i>
+                    </li>
+                    <li><a href="index.html">TRANG CHỦ</a></li>
+                    <li><a href="index.html">SẢN PHẨM</a></li>
+                    <li class="active"><a href="blog.html">BLOG</a></li>
+                    <li><a href="orders.html">ĐƠN HÀNG CỦA TÔI</a></li>
+                </ul>
+            </div>
+            <div class="icons">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm (Nhấn Enter)..." onkeypress="handleGlobalSearch(event)">
+                    <i class="fas fa-search" onclick="document.getElementById('searchInput').focus()"></i>
+                </div>
+                <a href="wishlist.html" class="icon-btn" title="Yêu thích">
+                    <i class="far fa-heart"></i>
+                    <span class="badge" id="wishCountDisplay">0</span>
+                </a>
+                <a href="cart.html" class="icon-btn" title="Giỏ hàng">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cartCountDisplay">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumb" id="breadcrumb">
+            <a href="index.html">Trang chủ</a> <span>/</span> <a href="blog.html">Blog & Tin tức</a> <span>/</span> Đang tải...
+        </div>
+
+        <article class="article-container" id="articleRenderArea">
+            </article>
+    </main>
+
+    <div class="floating-action">
+        <button class="float-btn scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+        // --- TÍNH NĂNG MENU TRÊN MOBILE ---
+        function toggleMobileMenu() {
+            document.getElementById('mainMenu').classList.toggle('active');
+            document.getElementById('menuOverlay').classList.toggle('active');
+        }
+
+        // --- TÌM KIẾM LIÊN TRANG (GLOBAL SEARCH) ---
+        function handleGlobalSearch(event) {
+            if (event.key === 'Enter') {
+                let keyword = event.target.value.toLowerCase().trim();
+                if (keyword !== '') {
+                    window.location.href = `index.html?search=${encodeURIComponent(keyword)}`;
+                }
+            }
+        }
+
+        // --- SCROLL TO TOP ---
+        window.onscroll = function() {
+            let scrollBtn = document.getElementById("scrollTopBtn");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.classList.add("show");
+            } else {
+                scrollBtn.classList.remove("show");
+            }
+        };
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 1. DỮ LIỆU BÀI VIẾT (Đã bổ sung đủ nội dung 6 bài viết)
+        const blogs = [
+            {
+                id: 1,
+                title: "Xu hướng Streetwear Xuân Hè 2026: Sự trỗi dậy của Techwear",
+                date: "06/03/2026",
+                cat: "FASHION",
+                author: "Stylist Blue Ultra",
+                img: "https://mialala.vn/media/lib/06-12-2022/batch_streetwear3im-93841.jpeg",
+                content: `
+                    <p>Phong cách đường phố năm nay đánh dấu sự kết hợp mạnh mẽ giữa tính ứng dụng cao và chất liệu công nghệ mới. Khám phá cách phối đồ cực chất cùng Blue Ultra.</p>
+                    <p>Techwear (Thời trang công nghệ) không chỉ là mặc đẹp, mà là mặc thông minh. Các chất liệu chống thấm nước, tản nhiệt tốt đang dần chiếm lĩnh thị trường thời trang năm nay.</p>
+                    <h3>Tại sao Techwear lại trở thành xu hướng?</h3>
+                    <p>Trong bối cảnh thời tiết ngày càng biến đổi và nhu cầu di chuyển của giới trẻ tăng cao, những trang phục có nhiều túi tiện ích, khóa kéo chống nước và form dáng tối ưu cử động đã trở thành sự lựa chọn số 1.</p>
+                    <ul>
+                        <li><strong>Chất liệu Gore-Tex:</strong> Chống nước tuyệt đối nhưng vẫn thoáng khí.</li>
+                        <li><strong>Thiết kế Modular:</strong> Có thể tháo rời tay áo hoặc túi hộp để thay đổi phong cách.</li>
+                        <li><strong>Tone màu chủ đạo:</strong> Đen, xám khói, và xanh olive.</li>
+                    </ul>
+                    <blockquote>"Sự thoải mái quyết định sự tự tin. Techwear mang lại cho chúng ta cả hai điều đó." - Chuyên gia thời trang Blue Ultra chia sẻ.</blockquote>
+                    <p>Hãy cùng cập nhật tủ đồ của bạn ngay hôm nay với những bộ sưu tập mới nhất tại hệ thống Blue Ultra nhé!</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Đánh giá chi tiết Macbook Pro M3: Có xứng đáng để nâng cấp?",
+                date: "01/03/2026",
+                cat: "TECH REVIEW",
+                author: "Tech Reviewer",
+                img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+                content: `
+                    <p>Cùng chúng tôi trên tay và trải nghiệm hiệu năng thực tế của siêu phẩm Apple mới nhất. Liệu con chip M3 có thực sự mang lại sức mạnh đột phá như lời đồn?</p>
+                    <h3>Sức mạnh từ chip M3 thế hệ mới</h3>
+                    <p>Apple đã thực sự làm giới công nghệ bất ngờ với tiến trình 3nm trên chip M3. Hiệu năng CPU tăng 20%, GPU tăng 30% so với thế hệ M1 trước đó.</p>
+                    <p>Đặc biệt khả năng tản nhiệt của dòng Macbook Pro năm nay đã được tinh chỉnh lại, giúp máy hoạt động êm ái hơn ngay cả khi render video 4K hay chơi game nặng.</p>
+                    <h3>Màn hình Liquid Retina XDR đỉnh cao</h3>
+                    <p>Vẫn giữ nguyên độ sáng đỉnh cao 1600 nits, màn hình của máy là một kiệt tác dành cho những người làm đồ họa, thiết kế hình ảnh và video chuyên nghiệp. Màu đen hiển thị sâu thẳm, độ tương phản ấn tượng giúp mọi khung hình trở nên sống động.</p>
+                    <blockquote>Sự xuất hiện của màu "Space Black" (Đen không gian) mới cũng là điểm cộng lớn, giúp hạn chế bám vân tay đáng kể.</blockquote>
+                    <p><strong>Kết luận:</strong> Nếu bạn đang dùng dòng máy Intel cũ hoặc M1, đây chắc chắn là thời điểm vàng để nâng cấp. Tuy nhiên, nếu bạn đang sở hữu M2 Pro, sự khác biệt có thể chưa đủ lớn để bạn phải "xuống tiền" ngay lúc này.</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Top 5 đôi Sneaker phải có trong tủ đồ của giới trẻ hiện nay",
+                date: "25/02/2026",
+                cat: "SNEAKERS",
+                author: "Hypebeast Vietnam",
+                img: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=800",
+                content: `
+                    <p>Bạn đang phân vân không biết nên chọn đôi giày nào để thể hiện cá tính? Đây là danh sách 5 đôi sneaker dễ phối đồ và không bao giờ lỗi mốt mà bất kỳ "đầu giày" nào cũng nên sở hữu.</p>
+                    <h3>1. Nike Air Force 1 All White</h3>
+                    <p>Huyền thoại sống của làng Sneaker. Một đôi giày trắng tinh khôi có thể "cân" mọi outfit từ quần đùi, quần jeans cho đến những bộ suit thanh lịch.</p>
+                    <h3>2. Adidas Samba</h3>
+                    <p>Sự quay trở lại ngoạn mục của phong cách Retro. Thiết kế mỏng, ôm chân cùng logo ba sọc cổ điển đang làm mưa làm gió trên các nền tảng mạng xã hội.</p>
+                    <h3>3. Air Jordan 1 High/Low</h3>
+                    <p>Không cần nói nhiều về sức hút của Air Jordan 1. Dù là bản High cổ cao hầm hố hay bản Low linh hoạt, đây vẫn là "chân ái" của cộng đồng Streetwear.</p>
+                    <h3>4. New Balance 550</h3>
+                    <p>Mang đậm hơi thở của thập niên 90, đôi giày bóng rổ này mang lại sự thoải mái tuyệt vời nhờ công nghệ đế êm ái và form dáng chunky vô cùng bắt mắt.</p>
+                    <h3>5. Converse Chuck Taylor All Star 1970s</h3>
+                    <p>Phiên bản nâng cấp của dòng Classic với phần đế ngà vintage và đệm lót êm hơn. Một sự lựa chọn an toàn nhưng không bao giờ nhàm chán.</p>
+                    <p>Tại Blue Ultra, chúng tôi luôn cập nhật những mẫu mã Sneaker mới nhất. Đừng quên ghé cửa hàng để trải nghiệm trực tiếp nhé!</p>
+                `
+            },
+            {
+                id: 4,
+                title: "Bí quyết chọn mua Nồi Chiên Không Dầu phù hợp cho gia đình",
+                date: "18/02/2026",
+                cat: "SMART HOME",
+                author: "Home Expert",
+                img: "https://sunhouse.com.vn/pic/news/nen-mua-noi-chien-khong-dau-may-lit.jpg",
+                content: `
+                    <p>Nồi chiên không dầu dung tích bao nhiêu là đủ? Công suất nào sẽ giúp thức ăn chín đều? Bài viết này sẽ giúp bạn trở thành chuyên gia mua sắm đồ gia dụng thông minh cho tổ ấm của mình.</p>
+                    <h3>Chọn dung tích theo số lượng thành viên</h3>
+                    <ul>
+                        <li><strong>Dưới 3 Lít:</strong> Phù hợp cho người sống độc thân hoặc sinh viên. Nướng được vài miếng thịt nhỏ hoặc khoai tây chiên khẩu phần 1 người.</li>
+                        <li><strong>Từ 4 đến 6 Lít:</strong> Là lựa chọn hoàn hảo cho gia đình tiêu chuẩn từ 3-5 người. Bạn có thể nướng gà nguyên con cỡ nhỏ một cách dễ dàng.</li>
+                        <li><strong>Trên 6 Lít (Size XXL):</strong> Dành cho đại gia đình hoặc những ai thường xuyên tổ chức tiệc tùng.</li>
+                    </ul>
+                    <h3>Chú ý đến công suất</h3>
+                    <p>Công suất càng lớn, thời gian làm chín thức ăn càng nhanh. Mức công suất lý tưởng nhất hiện nay dao động từ 1500W đến 2000W. Nó sẽ đảm bảo vỏ ngoài thức ăn giòn rụm trong khi bên trong vẫn giữ được độ ẩm mọng nước.</p>
+                    <h3>Tính năng bảng điều khiển</h3>
+                    <p>Có hai loại chính là Cơ (núm vặn) và Điện tử (cảm ứng). Bảng điều khiển điện tử thường được ưa chuộng hơn vì có các chế độ cài đặt sẵn thời gian/nhiệt độ cho từng loại thực phẩm riêng biệt.</p>
+                    <p>Tham khảo ngay các mẫu Nồi chiên không dầu hiện đại đang được phân phối chính hãng tại Blue Ultra với mức giá cực kỳ ưu đãi!</p>
+                `
+            },
+            {
+                id: 5,
+                title: "Màu sắc lên ngôi: Tone Titan bùng nổ trên các thiết bị công nghệ",
+                date: "10/02/2026",
+                cat: "TRENDS",
+                author: "Admin",
+                img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
+                content: `
+                    <p>Từ smartphone cho đến laptop và đồng hồ thông minh, chất liệu và màu sắc Titan đang trở thành tiêu chuẩn mới của sự sang trọng. Tại sao xu hướng này lại hot đến vậy?</p>
+                    <h3>Sự kết hợp giữa độ bền và trọng lượng nhẹ</h3>
+                    <p>Về mặt vật lý, Titanium (Titan) nổi tiếng với đặc tính cứng cáp hơn nhôm nhưng lại nhẹ hơn thép không gỉ rất nhiều. Việc áp dụng Titan lên các thiết bị công nghệ cao cấp như iPhone 15 Pro hay Samsung Galaxy S24 Ultra giúp máy giảm trọng lượng đáng kể, mang lại cảm giác cầm nắm thoải mái hơn.</p>
+                    <h3>Vẻ đẹp thẩm mỹ đầy cuốn hút</h3>
+                    <p>Màu Titan tự nhiên mang một nét xám nhám ánh kim đặc trưng. Nó không bóng bẩy, hào nhoáng như thép không gỉ, nhưng lại toát lên sự lì lợm, sang trọng và cực kỳ nam tính. Đặc biệt, bề mặt phay xước của Titan giúp giấu dấu vân tay cực kỳ tốt.</p>
+                    <blockquote>Năm 2026 được dự đoán sẽ là năm mà màu "Titanium" phủ sóng không chỉ trên thiết bị điện tử mà còn lấn sân sang cả phụ kiện thời trang.</blockquote>
+                    <p>Tại Blue Ultra, chúng tôi cũng đã kịp thời cập nhật các sản phẩm và phụ kiện mang hơi hướng Titan. Đừng bỏ lỡ xu hướng này nhé!</p>
+                `
+            },
+            {
+                id: 6,
+                title: "Cách bảo quản áo khoác da luôn như mới sau nhiều năm sử dụng",
+                date: "05/02/2026",
+                cat: "TIPS & TRICKS",
+                author: "Stylist Blue Ultra",
+                img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800",
+                content: `
+                    <p>Áo khoác da là một item đắt tiền nhưng lại rất dễ hỏng (nổ da, bong tróc) nếu không biết chăm sóc đúng cách. Lưu lại ngay 3 bước vệ sinh và bảo quản cực đơn giản này.</p>
+                    <h3>1. Vệ sinh nhẹ nhàng, tuyệt đối nói không với nước nóng</h3>
+                    <p>Khi áo da bị bẩn, tuyệt đối không ném vào máy giặt. Hãy dùng một chiếc khăn mềm, nhúng vào nước ấm (không dùng nước nóng vì sẽ làm teo da) pha chút xà phòng nhẹ, lau sạch bề mặt. Sau đó, lau lại bằng khăn khô và phơi ở nơi thoáng mát, tránh ánh nắng trực tiếp.</p>
+                    <h3>2. Sử dụng dung dịch dưỡng ẩm cho da (Leather Conditioner)</h3>
+                    <p>Giống như da người, áo khoác da cũng cần được "cấp ẩm" để tránh tình trạng khô nứt. Khoảng 3-6 tháng 1 lần, hãy thoa một lớp mỏng dung dịch bảo dưỡng chuyên dụng lên toàn bộ bề mặt áo. Điều này giúp lớp da luôn mềm mại và bóng bẩy.</p>
+                    <h3>3. Cách treo và cất giữ đúng chuẩn</h3>
+                    <ul>
+                        <li><strong>Dùng móc to bản:</strong> Để giữ form vai, hãy sử dụng móc bằng gỗ hoặc nhựa có độ rộng vừa vặn. Tuyệt đối không dùng móc nhôm mỏng dễ làm hỏng vai áo.</li>
+                        <li><strong>Tránh túi nilon:</strong> Đừng bọc áo da trong túi nilon kín. Hãy dùng túi vải bọc quần áo (Garment bag) để áo có thể "thở" và không bị mốc.</li>
+                    </ul>
+                    <p>Áp dụng ngay các mẹo trên để chiếc áo khoác da của bạn có thể đồng hành cùng bạn trên nhiều hành trình sắp tới nhé!</p>
+                `
+            }
+        ];
+
+        // 2. LOGIC LẤY BÀI VIẾT TỪ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let articleId = parseInt(urlParams.get('id')) || 1; // Mặc định bài số 1 nếu không có tham số
+        
+        let currentArticle = blogs.find(b => b.id === articleId);
+
+        // Đề phòng ID nhập vào không tồn tại
+        if (!currentArticle) {
+            currentArticle = blogs[0];
+        }
+
+        // 3. RENDER BÀI VIẾT
+        function renderArticle() {
+            const container = document.getElementById('articleRenderArea');
+            const breadcrumb = document.getElementById('breadcrumb');
+
+            breadcrumb.innerHTML = `<a href="index.html">Trang chủ</a> <span>/</span> <a href="blog.html">Blog & Tin tức</a> <span>/</span> ${currentArticle.cat}`;
+
+            container.innerHTML = `
+                <span class="article-cat">${currentArticle.cat}</span>
+                <h1 class="article-title">${currentArticle.title}</h1>
+                
+                <div class="article-meta">
+                    <span><i class="far fa-calendar-alt"></i> ${currentArticle.date}</span>
+                    <span><i class="far fa-user"></i> Bởi ${currentArticle.author}</span>
+                    <span><i class="far fa-eye"></i> ${Math.floor(Math.random() * 5000) + 1000} Lượt xem</span>
+                </div>
+
+                <img src="${currentArticle.img}" alt="${currentArticle.title}" class="article-hero">
+
+                <div class="article-content">
+                    ${currentArticle.content}
+                </div>
+
+                <div class="comments-section">
+                    <h3 class="comments-title">Bình Luận (1)</h3>
+                    
+                    <form class="comment-form" onsubmit="submitComment(event)">
+                        <div class="comment-input-row">
+                            <input type="text" id="cmtName" placeholder="Tên của bạn *" required>
+                            <input type="email" id="cmtEmail" placeholder="Email của bạn *" required>
+                        </div>
+                        <textarea id="cmtContent" class="comment-textarea" placeholder="Nhập nội dung bình luận của bạn..." required></textarea>
+                        <button type="submit" class="btn-comment">GỬI BÌNH LUẬN</button>
+                    </form>
+
+                    <div class="comment-list" id="commentList">
+                        <div class="comment-item">
+                            <div class="comment-avatar">H</div>
+                            <div class="comment-body">
+                                <h4>Hoàng Nam <span class="comment-date">Hôm qua</span></h4>
+                                <p>Bài viết rất hữu ích! Cảm ơn đội ngũ Blue Ultra đã chia sẻ thông tin này.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 4. LOGIC GỬI BÌNH LUẬN ẢO
+        function submitComment(event) {
+            event.preventDefault();
+            const name = document.getElementById('cmtName').value;
+            const content = document.getElementById('cmtContent').value;
+            
+            const newCommentHTML = `
+                <div class="comment-item" style="animation: slideIn 0.5s ease;">
+                    <div class="comment-avatar" style="background: var(--red);">${name.charAt(0).toUpperCase()}</div>
+                    <div class="comment-body">
+                        <h4>${name} <span class="comment-date">Vừa xong</span></h4>
+                        <p>${content}</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('commentList').insertAdjacentHTML('afterbegin', newCommentHTML);
+            
+            // Xóa trắng form
+            document.getElementById('cmtName').value = '';
+            document.getElementById('cmtEmail').value = '';
+            document.getElementById('cmtContent').value = '';
+
+            // Bật Toast thông báo
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast success`;
+            toast.innerHTML = `<i class="fas fa-check-circle" style="color:#4CAF50"></i> <span>Đã gửi bình luận thành công!</span>`;
+            toastContainer.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // --- LOGIC CẬP NHẬT SỐ LƯỢNG GIỎ HÀNG TRÊN HEADER ---
+        function getCart() { 
+            let rawCart = JSON.parse(localStorage.getItem("zenith_cart")) || [];
+            let cleanCart = rawCart.filter(item => item && typeof item.price === 'number' && !isNaN(item.price));
+            if(rawCart.length !== cleanCart.length) {
+                localStorage.setItem("zenith_cart", JSON.stringify(cleanCart));
+            }
+            return cleanCart;
+        }
+
+        function getWishlist() { 
+            return JSON.parse(localStorage.getItem("zenith_wishlist")) || []; 
+        }
+
+        function updateCounts() {
+            document.getElementById('cartCountDisplay').innerText = getCart().reduce((s,i) => s + (Number(i.qty) || 1), 0);
+            document.getElementById('wishCountDisplay').innerText = getWishlist().length;
+        }
+
+        // Khởi chạy
+        renderArticle();
+        updateCounts();
+
+    </script>
+</body>
+</html>
