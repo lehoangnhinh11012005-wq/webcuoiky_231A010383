@@ -100,8 +100,8 @@
 
         /* === 3. BANNER SLIDER CHUYỂN ĐỘNG === */
         .slider-wrapper { position: relative; height: 80vh; width: 100%; overflow: hidden; margin-bottom: 50px; }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; }
-        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; cursor: pointer; /* Thêm con trỏ tay */ }
+        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; pointer-events: none; /* FIX: Cho phép click xuyên qua lớp màng đen */ }
         .slide.active { opacity: 1; z-index: 3; }
         
         .slide-content { position: relative; z-index: 4; transform: translateY(20px); transition: 0.8s; }
@@ -492,9 +492,10 @@
             .feature-item { width: 45%; }
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
             .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .floating-action { bottom: 20px; right: 20px; transform: scale(0.8); transform-origin: bottom right;}
             
-            .chat-widget { bottom: 80px; right: 20px; } /* Điều chỉnh chatbox trên mobile */
+            /* FIX: Căn lại nút Chat và Scroll to Top để không đè lên nút "Thêm vào giỏ" */
+            .chat-widget { bottom: 65px; right: 15px; transform: scale(0.85); transform-origin: bottom right;} 
+            .floating-action { bottom: 15px; right: 15px; transform: scale(0.75); transform-origin: bottom right;}
         }
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr; }
@@ -562,40 +563,40 @@
     </header>
 
     <div class="slider-wrapper">
-        <div class="slide active" style="background-image: url('https://replicate.delivery/xpbkg/H88K9B602D50C43D42C67B6B0E09995543D69F393D356A49/output.png');">
+        <div class="slide active" style="background-image: url('https://replicate.delivery/xpbkg/H88K9B602D50C43D42C67B6B0E09995543D69F393D356A49/output.png');" onclick="scrollToProducts('ALL')">
             <div class="slide-content">
                 <h1>BỘ SƯU TẬP MỚI NHẤT</h1>
-                <button class="btn-shop" onclick="scrollToProducts('ALL')">MUA NGAY</button>
+                <button class="btn-shop">MUA NGAY</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920');">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920');" onclick="scrollToProducts('CÔNG NGHỆ')">
             <div class="slide-content">
                 <h1>ĐỈNH CAO CÔNG NGHỆ</h1>
-                <button class="btn-shop" onclick="scrollToProducts('CÔNG NGHỆ')">KHÁM PHÁ</button>
+                <button class="btn-shop">KHÁM PHÁ</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://jadeblue.com/cdn/shop/articles/mens_summer_wear.jpg?v=1714380887&width=1100');">
+        <div class="slide" style="background-image: url('https://jadeblue.com/cdn/shop/articles/mens_summer_wear.jpg?v=1714380887&width=1100');" onclick="scrollToProducts('NAM')">
             <div class="slide-content">
                 <h1>PHONG CÁCH PHÁI MẠNH</h1>
-                <button class="btn-shop" onclick="scrollToProducts('NAM')">PHONG CÁCH NAM</button>
+                <button class="btn-shop">PHONG CÁCH NAM</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920');">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920');" onclick="scrollToProducts('NỮ')">
             <div class="slide-content">
                 <h1>NÉT ĐẸP QUYẾN RŨ</h1>
-                <button class="btn-shop" onclick="scrollToProducts('NỮ')">THỜI TRANG NỮ</button>
+                <button class="btn-shop">THỜI TRANG NỮ</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920');">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920');" onclick="scrollToProducts('GIÀY TÚI')">
             <div class="slide-content">
                 <h1>BƯỚC CHÂN NĂNG ĐỘNG</h1>
-                <button class="btn-shop" onclick="scrollToProducts('GIÀY TÚI')">XEM CHI TIẾT</button>
+                <button class="btn-shop">XEM CHI TIẾT</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920');">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920');" onclick="scrollToProducts('GIA DỤNG')">
             <div class="slide-content">
                 <h1>TIỆN ÍCH THÔNG MINH</h1>
-                <button class="btn-shop" onclick="scrollToProducts('GIA DỤNG')">ĐỒ GIA DỤNG</button>
+                <button class="btn-shop">ĐỒ GIA DỤNG</button>
             </div>
         </div>
     </div>
@@ -927,7 +928,6 @@
                 btnElement.classList.add('active');
             } else {
                 let targetMenu = Array.from(menuItems).find(li => {
-                    // Dùng textContent.trim() sẽ an toàn hơn innerText trên mobile khi menu đang bị ẩn
                     let text = li.textContent.trim();
                     if(category === 'ALL') return text === 'TẤT CẢ SẢN PHẨM';
                     return text.includes(category);
@@ -945,7 +945,6 @@
             currentData = filteredData; 
             renderHTML(filteredData);
 
-            // Tăng thời gian delay để đảm bảo HTML render xong trên điện thoại trước khi tính vị trí tọa độ
             setTimeout(() => {
                 const titleSection = document.getElementById('categoryTitleArea');
                 if(titleSection) {
@@ -1026,6 +1025,9 @@
         // CÁC HIỆU ỨNG CARD & LOGIC GIỎ HÀNG
         // ==========================================
         function handleTilt(e, card) {
+            // FIX LỖI GHOST TAP: Chặn hiệu ứng thay đổi cấu trúc 3D trên màn hình mobile (gây lỗi mất click)
+            if (window.innerWidth <= 900) return;
+
             const cardRect = card.getBoundingClientRect();
             const x = e.clientX - cardRect.left;
             const y = e.clientY - cardRect.top;
@@ -1037,6 +1039,7 @@
         }
 
         function resetTilt(card) {
+            if (window.innerWidth <= 900) return; // FIX
             card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         }
 
