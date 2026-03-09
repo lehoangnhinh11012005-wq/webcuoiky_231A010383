@@ -100,8 +100,8 @@
 
         /* === 3. BANNER SLIDER CHUYỂN ĐỘNG === */
         .slider-wrapper { position: relative; height: 80vh; width: 100%; overflow: hidden; margin-bottom: 50px; }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; cursor: pointer; /* Cho phép click toàn bộ slide */ }
-        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; pointer-events: none; /* Không cản trở sự kiện click */ }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; }
+        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; pointer-events: none;}
         .slide.active { opacity: 1; z-index: 3; }
         
         .slide-content { position: relative; z-index: 4; transform: translateY(20px); transition: 0.8s; }
@@ -137,7 +137,6 @@
             transform-style: preserve-3d;
             transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             will-change: transform;
-            cursor: pointer; /* Cho phép con trỏ chuột hiển thị click toàn bộ thẻ */
         }
         
         .product-card:hover { 
@@ -199,25 +198,20 @@
         .chat-body::-webkit-scrollbar { width: 5px; }
         .chat-body::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
         
-        /* Hiển thị xuống dòng cho nội dung tư vấn */
         .msg { max-width: 85%; padding: 10px 15px; border-radius: 15px; line-height: 1.5; word-wrap: break-word; white-space: pre-wrap; }
         .bot-msg { background: var(--bg-alt); color: var(--text-color); border-bottom-left-radius: 2px; align-self: flex-start; border: 1px solid var(--border-color); }
         .user-msg { background: var(--primary); color: var(--primary-invert); border-bottom-right-radius: 2px; align-self: flex-end; }
-        .msg img { max-width: 100%; border-radius: 8px; margin-top: 8px; border: 1px solid var(--border-color); } /* CSS cho ảnh tải lên */
+        .msg img { max-width: 100%; border-radius: 8px; margin-top: 8px; border: 1px solid var(--border-color); }
         
         .quick-options { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
         .quick-btn { background: transparent; border: 1px solid var(--primary); color: var(--text-color); padding: 8px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; text-align: left; font-family: var(--font); font-weight: 600;}
         .quick-btn:hover { background: var(--primary); color: var(--primary-invert); }
         
         .chat-input { padding: 12px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; background: var(--bg-color); align-items: center;}
-        
-        /* Chỉnh CSS nút attach ảnh */
         .chat-input .attach-btn { background: var(--bg-alt); color: var(--text-color); border: 1px solid var(--border-color); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
         .chat-input .attach-btn:hover { background: var(--border-color); color: var(--primary); }
-        
         .chat-input input[type="text"] { flex: 1; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 20px; outline: none; background: var(--bg-alt); color: var(--text-color); font-family: var(--font); transition: 0.3s;}
         .chat-input input[type="text"]:focus { border-color: var(--primary); }
-        
         .chat-input .send-btn { background: var(--primary); color: var(--primary-invert); border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;}
         .chat-input .send-btn:hover { background: var(--red); color: #fff; }
 
@@ -230,33 +224,11 @@
         .about-subtitle { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; color: var(--text-color); }
         .about-subdesc { font-size: 1rem; color: #888; margin-bottom: 40px; font-weight: 500; }
         
-        .about-gallery { 
-            display: grid; 
-            grid-template-columns: repeat(6, 1fr); 
-            gap: 20px; 
-            width: 100%;
-        }
+        .about-gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; width: 100%; }
         
-        .gallery-item { 
-            border-radius: 12px; 
-            overflow: hidden; 
-            position: relative; 
-            cursor: pointer; 
-            box-shadow: 0 5px 15px var(--card-shadow); 
-        }
-        
-        .gallery-item:nth-child(1),
-        .gallery-item:nth-child(2),
-        .gallery-item:nth-child(3) {
-            grid-column: span 2;
-            height: 450px; 
-        }
-
-        .gallery-item:nth-child(4),
-        .gallery-item:nth-child(5) {
-            grid-column: span 3;
-            height: 550px; 
-        }
+        .gallery-item { border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 5px 15px var(--card-shadow); }
+        .gallery-item:nth-child(1), .gallery-item:nth-child(2), .gallery-item:nth-child(3) { grid-column: span 2; height: 450px; }
+        .gallery-item:nth-child(4), .gallery-item:nth-child(5) { grid-column: span 3; height: 550px; }
 
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .gallery-item:hover img { transform: scale(1.05); }
@@ -264,197 +236,64 @@
         .gallery-item:hover::after { background: rgba(0,0,0,0); }
         
         .gallery-overlay {
-            position: absolute;
-            bottom: 0; left: 0; width: 100%;
-            padding: 30px 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            color: white;
-            text-align: left;
-            transform: translateY(10px);
-            opacity: 0.8;
-            transition: all 0.3s ease;
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;
+            text-align: left; transform: translateY(10px); opacity: 0.8; transition: all 0.3s ease;
         }
-        .gallery-item:hover .gallery-overlay {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .gallery-item:hover .gallery-overlay { transform: translateY(0); opacity: 1; }
         .gallery-overlay h4 { font-size: 1.5rem; font-weight: 900; margin-bottom: 5px; text-transform: uppercase; }
         .gallery-overlay p { font-size: 1rem; font-weight: 500; color: var(--red); text-transform: uppercase; letter-spacing: 1px;}
 
         /* === 7. FOOTER NỀN ĐEN === */
-        .footer-dark {
-            background-color: #0b0b0b;
-            color: #ffffff;
-            padding: 60px 0 30px;
-            margin-top: 0;
-        }
-        
-        .footer-features {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #222;
-            padding-bottom: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .feature-item i {
-            font-size: 2.2rem;
-            color: #fff;
-        }
-        
-        .feature-text h4 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-        
-        .feature-text p {
-            font-size: 0.9rem;
-            color: #888;
-            margin-bottom: 0;
-            font-weight: 500;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-        }
-
-        .footer-col h4 {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: 1px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 15px;
-        }
-
-        .footer-col ul li a {
-            color: #888;
-            font-size: 0.95rem;
-            transition: 0.3s;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--red);
-            padding-left: 5px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .social-icons a {
-            color: #fff;
-            font-size: 1.5rem;
-            transition: 0.3s;
-        }
-
-        .social-icons a:hover {
-            color: var(--red);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            margin-top: 40px;
-            border-top: 1px solid #222;
-            color: #555;
-            font-size: 0.85rem;
-        }
+        .footer-dark { background-color: #0b0b0b; color: #ffffff; padding: 60px 0 30px; margin-top: 0; }
+        .footer-features { display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding-bottom: 40px; margin-bottom: 40px; }
+        .feature-item { display: flex; align-items: center; gap: 15px; }
+        .feature-item i { font-size: 2.2rem; color: #fff; }
+        .feature-text h4 { font-size: 1.1rem; margin-bottom: 5px; text-transform: uppercase; font-weight: 800; }
+        .feature-text p { font-size: 0.9rem; color: #888; margin-bottom: 0; font-weight: 500; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+        .footer-col h4 { font-size: 1.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: 800; color: #fff; letter-spacing: 1px; }
+        .footer-col ul { list-style: none; padding: 0; }
+        .footer-col ul li { margin-bottom: 15px; }
+        .footer-col ul li a { color: #888; font-size: 0.95rem; transition: 0.3s; cursor: pointer; font-weight: 500; }
+        .footer-col ul li a:hover { color: var(--red); padding-left: 5px; }
+        .social-icons { display: flex; gap: 20px; margin-top: 20px; }
+        .social-icons a { color: #fff; font-size: 1.5rem; transition: 0.3s; }
+        .social-icons a:hover { color: var(--red); transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding-top: 30px; margin-top: 40px; border-top: 1px solid #222; color: #555; font-size: 0.85rem; }
 
         /* === 8. MODAL 3D HIỂN THỊ THÔNG TIN FOOTER === */
-        .info-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(5px);
-        }
-        .info-modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .info-modal-content {
-            background: var(--bg-color);
-            color: var(--text-color);
-            width: 90%;
-            max-width: 600px;
-            border-radius: 12px;
-            padding: 40px;
-            position: relative;
-            transform: scale(0.8) translateY(50px) rotateX(-20deg);
-            opacity: 0;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            perspective: 1000px;
-        }
-        .info-modal-overlay.active .info-modal-content {
-            transform: scale(1) translateY(0) rotateX(0deg);
-            opacity: 1;
-        }
-        .close-modal-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: transparent;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .close-modal-btn:hover {
-            color: var(--red);
-            transform: rotate(90deg);
-        }
-        #modalTitle {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 10px;
-            text-transform: uppercase;
-        }
-        #modalBody {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #666;
-            max-height: 60vh;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
+        .info-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 10000; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(5px); }
+        .info-modal-overlay.active { opacity: 1; visibility: visible; }
+        .info-modal-content { background: var(--bg-color); color: var(--text-color); width: 90%; max-width: 600px; border-radius: 12px; padding: 40px; position: relative; transform: scale(0.8) translateY(50px) rotateX(-20deg); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 20px 50px rgba(0,0,0,0.3); perspective: 1000px; }
+        .info-modal-overlay.active .info-modal-content { transform: scale(1) translateY(0) rotateX(0deg); opacity: 1; }
+        .close-modal-btn { position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 1.5rem; color: var(--text-color); cursor: pointer; transition: 0.3s; }
+        .close-modal-btn:hover { color: var(--red); transform: rotate(90deg); }
+        #modalTitle { font-size: 1.8rem; font-weight: 900; margin-bottom: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; text-transform: uppercase; }
+        #modalBody { font-size: 1rem; line-height: 1.8; color: #666; max-height: 60vh; overflow-y: auto; padding-right: 10px; }
         #modalBody::-webkit-scrollbar { width: 6px; }
         #modalBody::-webkit-scrollbar-track { background: var(--bg-alt); border-radius: 4px; }
         #modalBody::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+
+        /* =========================================
+           BỔ SUNG: MỞ RỘNG VÙNG CLICK TOÀN KHUNG
+           ========================================= */
+        /* 1. Mở rộng vùng click Sản phẩm */
+        .card-link-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer; }
+        .wishlist-btn { position: relative; z-index: 10; pointer-events: auto; }
+        .product-info { position: relative; z-index: 10; pointer-events: none; } /* Cho phép click xuyên chữ */
+        .opt-box, .btn-add { position: relative; z-index: 10; pointer-events: auto; } /* Giữ chức năng nút bên trong */
+        
+        /* 2. Mở rộng vùng click Slider Banner (Hero Banner) */
+        .slide-overlay-link { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer; }
+        .slide-content { position: relative; z-index: 10; pointer-events: none; }
+        .slide-content .btn-shop { pointer-events: auto; cursor: pointer; } 
+
+        /* 3. Mở rộng vùng click Banner Giới thiệu (Gallery Box) */
+        .gallery-item { cursor: pointer; position: relative; }
+        .gallery-item::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; }
+        .gallery-overlay { position: absolute; z-index: 4; pointer-events: none; }
 
         /* =========================================
            TỐI ƯU HÓA HIỂN THỊ TRÊN ĐIỆN THOẠI (MOBILE)
@@ -464,23 +303,14 @@
             .logo-area { gap: 10px; width: 100%; justify-content: flex-start; }
             .logo { font-size: 1.5rem; flex-grow: 1; }
             
-            .menu-row { 
-                position: fixed; top: 0; right: -100%; width: 260px; height: 100vh; 
-                background: var(--bg-color); flex-direction: column; align-items: flex-start; gap: 0;
-                padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); 
-                transition: right 0.4s ease; z-index: 10000; 
-            }
+            .menu-row { position: fixed; top: 0; right: -100%; width: 260px; height: 100vh; background: var(--bg-color); flex-direction: column; align-items: flex-start; gap: 0; padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.4s ease; z-index: 10000; }
             .menu-row.active { right: 0; } 
             .menu-row li { width: 100%; border-bottom: 1px solid var(--border-color); padding: 15px 0; font-size: 1rem; }
             .menu-row li.active::after { display: none; }
             
             .close-menu-btn { display: flex; justify-content: space-between; align-items: center; color: var(--red) !important; font-weight: 800; border-bottom: 2px solid var(--border-color) !important; padding-bottom: 20px !important; margin-bottom: 10px; }
             
-            .menu-overlay {
-                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.6); z-index: 9999; 
-                opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(2px);
-            }
+            .menu-overlay { display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(2px); }
             .menu-overlay.active { opacity: 1; visibility: visible; }
 
             .product-grid { grid-template-columns: repeat(2, 1fr); perspective: none; }
@@ -493,9 +323,8 @@
             .feature-item { width: 45%; }
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
             .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-            
-            .chat-widget { bottom: 65px; right: 15px; transform: scale(0.85); transform-origin: bottom right;} 
-            .floating-action { bottom: 15px; right: 15px; transform: scale(0.75); transform-origin: bottom right;}
+            .floating-action { bottom: 20px; right: 20px; transform: scale(0.8); transform-origin: bottom right;}
+            .chat-widget { bottom: 80px; right: 20px; } 
         }
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr; }
@@ -519,11 +348,8 @@
         <div class="container header-container">
             <div class="logo-area">
                 <i class="fas fa-bars mobile-toggle" onclick="toggleMobileMenu()"></i>
-
                 <a href="index.html" class="logo">BLUE ULTRA</a>
-                
                 <div class="menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
-
                 <ul class="menu-row" id="mainMenu">
                     <li class="close-menu-btn" onclick="toggleMobileMenu()">
                         <span>MENU</span> <i class="fas fa-times" style="font-size: 1.5rem;"></i>
@@ -544,16 +370,13 @@
                     <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." onkeyup="searchProducts(event)">
                     <i class="fas fa-search" onclick="document.getElementById('searchInput').focus()"></i>
                 </div>
-
                 <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Đổi giao diện">
                     <i class="fas fa-moon"></i>
                 </button>
-
                 <a href="wishlist.html" class="icon-btn" title="Yêu thích">
                     <i class="far fa-heart"></i>
                     <span class="badge" id="wishCountDisplay">0</span>
                 </a>
-                
                 <a href="cart.html" class="icon-btn" title="Giỏ hàng">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="badge" id="cartCountDisplay">0</span>
@@ -563,40 +386,46 @@
     </header>
 
     <div class="slider-wrapper">
-        <div class="slide active" style="background-image: url('https://replicate.delivery/xpbkg/H88K9B602D50C43D42C67B6B0E09995543D69F393D356A49/output.png');" onclick="scrollToProducts('ALL')">
+        <div class="slide active" style="background-image: url('https://replicate.delivery/xpbkg/H88K9B602D50C43D42C67B6B0E09995543D69F393D356A49/output.png');">
+            <div class="slide-overlay-link" onclick="scrollToProducts('ALL')"></div>
             <div class="slide-content">
                 <h1>BỘ SƯU TẬP MỚI NHẤT</h1>
-                <button class="btn-shop">MUA NGAY</button>
+                <button class="btn-shop" onclick="scrollToProducts('ALL')">MUA NGAY</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920');" onclick="scrollToProducts('CÔNG NGHỆ')">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920');">
+            <div class="slide-overlay-link" onclick="scrollToProducts('CÔNG NGHỆ')"></div>
             <div class="slide-content">
                 <h1>ĐỈNH CAO CÔNG NGHỆ</h1>
-                <button class="btn-shop">KHÁM PHÁ</button>
+                <button class="btn-shop" onclick="scrollToProducts('CÔNG NGHỆ')">KHÁM PHÁ</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://jadeblue.com/cdn/shop/articles/mens_summer_wear.jpg?v=1714380887&width=1100');" onclick="scrollToProducts('NAM')">
+        <div class="slide" style="background-image: url('https://jadeblue.com/cdn/shop/articles/mens_summer_wear.jpg?v=1714380887&width=1100');">
+            <div class="slide-overlay-link" onclick="scrollToProducts('NAM')"></div>
             <div class="slide-content">
                 <h1>PHONG CÁCH PHÁI MẠNH</h1>
-                <button class="btn-shop">PHONG CÁCH NAM</button>
+                <button class="btn-shop" onclick="scrollToProducts('NAM')">PHONG CÁCH NAM</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920');" onclick="scrollToProducts('NỮ')">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920');">
+            <div class="slide-overlay-link" onclick="scrollToProducts('NỮ')"></div>
             <div class="slide-content">
                 <h1>NÉT ĐẸP QUYẾN RŨ</h1>
-                <button class="btn-shop">THỜI TRANG NỮ</button>
+                <button class="btn-shop" onclick="scrollToProducts('NỮ')">THỜI TRANG NỮ</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920');" onclick="scrollToProducts('GIÀY TÚI')">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920');">
+            <div class="slide-overlay-link" onclick="scrollToProducts('GIÀY TÚI')"></div>
             <div class="slide-content">
                 <h1>BƯỚC CHÂN NĂNG ĐỘNG</h1>
-                <button class="btn-shop">XEM CHI TIẾT</button>
+                <button class="btn-shop" onclick="scrollToProducts('GIÀY TÚI')">XEM CHI TIẾT</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920');" onclick="scrollToProducts('GIA DỤNG')">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920');">
+            <div class="slide-overlay-link" onclick="scrollToProducts('GIA DỤNG')"></div>
             <div class="slide-content">
                 <h1>TIỆN ÍCH THÔNG MINH</h1>
-                <button class="btn-shop">ĐỒ GIA DỤNG</button>
+                <button class="btn-shop" onclick="scrollToProducts('GIA DỤNG')">ĐỒ GIA DỤNG</button>
             </div>
         </div>
     </div>
@@ -605,7 +434,6 @@
         
         <div class="section-header" id="categoryTitleArea">
             <h2 class="section-title" id="categoryTitle">TẤT CẢ SẢN PHẨM</h2>
-            
             <div class="sort-box">
                 <select id="sortSelect" onchange="handleSortProducts()">
                     <option value="default">Sắp xếp: Mặc định</option>
@@ -863,17 +691,7 @@
         }, 4000);
 
         let selectedOptions = {}; 
-        let currentData = products; // Lưu trữ dữ liệu đang được lọc theo Category để dùng cho Sort
-
-        // HÀM MỚI: Xử lý click chuyển trang toàn bộ thẻ sản phẩm
-        function goToProduct(e, id) {
-            // Ngăn chặn chuyển trang nếu click vào các nút chức năng (yêu thích, thêm giỏ, đổi size)
-            if (e.target.closest('.wishlist-btn') || e.target.closest('.btn-add') || e.target.closest('.opt-box')) {
-                return;
-            }
-            // Chuyển hướng
-            window.location.href = `product.html?id=${id}`;
-        }
+        let currentData = products;
 
         function renderHTML(dataArray) {
             const grid = document.getElementById('productGrid');
@@ -902,18 +720,20 @@
                     `;
                 }
 
-                // CẬP NHẬT: Thêm sự kiện onclick="goToProduct" vào div ngoài cùng
+                // Đã cấu hình lại HTML: Xóa các thẻ <a> bên trong, dùng <a> Overlay phủ ngoài để toàn thẻ nhận lệnh click
                 return `
-                <div class="product-card" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)" onclick="goToProduct(event, '${p.id}')">
+                <div class="product-card" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <a href="product.html?id=${p.id}" class="card-link-overlay"></a>
+
                     <button class="wishlist-btn ${isFavorite ? 'active' : ''}" onclick="toggleWishlist('${p.id}')">
                         <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
                     </button>
-                    <a href="product.html?id=${p.id}" onclick="event.preventDefault();">
-                        <img src="${p.img}" alt="${p.name}" class="product-img">
-                    </a>
+                    
+                    <img src="${p.img}" alt="${p.name}" class="product-img">
+                    
                     <div class="product-info">
                         <span class="product-cat">${p.cat}</span>
-                        <a href="product.html?id=${p.id}" onclick="event.preventDefault();"><h3 class="product-name">${p.name}</h3></a>
+                        <h3 class="product-name">${p.name}</h3>
                         
                         <div class="product-price" id="price-display-${p.id}">${formatPrice(p.price)}</div>
                         
@@ -929,7 +749,7 @@
         }
 
         // ==========================================
-        // TÌM KIẾM VÀ SẮP XẾP SẢN PHẨM (ĐÃ SỬA LỖI SCROLL)
+        // TÌM KIẾM VÀ SẮP XẾP SẢN PHẨM 
         // ==========================================
         function scrollToProducts(category, btnElement) {
             let menuItems = document.querySelectorAll('.menu-row li');
@@ -948,7 +768,6 @@
 
             document.getElementById('searchInput').value = '';
             document.getElementById('categoryTitle').innerText = category === 'ALL' ? 'TẤT CẢ SẢN PHẨM' : category;
-
             document.getElementById('sortSelect').value = 'default';
 
             let filteredData = category === 'ALL' ? products : products.filter(item => item.cat === category); 
@@ -956,6 +775,7 @@
             currentData = filteredData; 
             renderHTML(filteredData);
 
+            // Bổ sung độ trễ 200ms giúp Web Render trên điện thoại ổn định hơn trước khi cuộn
             setTimeout(() => {
                 const titleSection = document.getElementById('categoryTitleArea');
                 if(titleSection) {
@@ -965,7 +785,7 @@
                     try {
                         window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                     } catch (err) {
-                        window.scrollTo(0, offsetPosition); // Fallback an toàn
+                        window.scrollTo(0, offsetPosition); 
                     }
                 }
             }, 200); 
@@ -980,7 +800,6 @@
             } else if (sortValue === 'price-desc') {
                 dataToSort.sort((a, b) => b.price - a.price);
             }
-
             renderHTML(dataToSort);
         }
 
@@ -1017,7 +836,6 @@
             }
         }
 
-        // Cuộn lên đầu trang (Scroll to top)
         window.onscroll = function() {
             let scrollBtn = document.getElementById("scrollTopBtn");
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -1036,7 +854,8 @@
         // CÁC HIỆU ỨNG CARD & LOGIC GIỎ HÀNG
         // ==========================================
         function handleTilt(e, card) {
-            if (window.innerWidth <= 900) return;
+            // Chặn hiệu ứng 3D trên màn hình nhỏ để tránh lỗi nhận nhầm click (Ghost tap)
+            if (window.innerWidth <= 900) return; 
 
             const cardRect = card.getBoundingClientRect();
             const x = e.clientX - cardRect.left;
@@ -1076,7 +895,6 @@
         }
 
         function getWishlist(){ return JSON.parse(localStorage.getItem("zenith_wishlist")) || [] }
-        
         function saveCart(cart){ localStorage.setItem("zenith_cart",JSON.stringify(cart)); updateCounts(); }
         function saveWishlist(list){ localStorage.setItem("zenith_wishlist", JSON.stringify(list)); updateCounts(); }
 
@@ -1140,7 +958,7 @@
         }
 
         // ==========================================
-        // BỔ SUNG: LOGIC HOẠT ĐỘNG CHO CHATBOX (UPLOAD & LẶP LẠI TÙY CHỌN & AUTO REPLY)
+        // BỔ SUNG: LOGIC HOẠT ĐỘNG CHO CHATBOX 
         // ==========================================
         function toggleChat() {
             document.getElementById('chatBox').classList.toggle('show');
@@ -1150,7 +968,6 @@
             const chatBody = document.getElementById('chatBody');
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg ${sender}-msg`;
-            // Dùng innerHTML để render thẻ img nếu có
             msgDiv.innerHTML = text;
             chatBody.appendChild(msgDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
@@ -1161,7 +978,6 @@
             optsContainers.forEach(opt => opt.remove());
         }
 
-        // Hàm gọi lại các tùy chọn (Size/Lỗi) khi chat kết thúc 1 phiên
         function showFollowUpOptions() {
             setTimeout(() => {
                 addMessage('Bạn có cần hỗ trợ thêm vấn đề nào khác không?', 'bot');
@@ -1174,10 +990,9 @@
                 `;
                 chatBody.appendChild(optsDiv);
                 chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1500); // Kích hoạt 1.5s sau câu trả lời trước đó
+            }, 1500); 
         }
 
-        // Xử lý gửi ảnh qua input file
         function handleChatFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1185,15 +1000,13 @@
                 reader.onload = function(e) {
                     const imgTag = `<br><img src="${e.target.result}" alt="Uploaded Image">`;
                     addMessage('Đã tải lên tệp đính kèm: ' + imgTag, 'user');
-                    removeQuickOptions(); // Đảm bảo ẩn các nút nếu còn
-                    
+                    removeQuickOptions(); 
                     setTimeout(() => {
                         addMessage('Cảm ơn bạn đã cung cấp hình ảnh. Đội ngũ kỹ thuật của Blue Ultra đang kiểm tra và sẽ phản hồi trong thời gian sớm nhất!', 'bot');
-                        showFollowUpOptions(); // Hiện lại tùy chọn sau khi phản hồi
+                        showFollowUpOptions(); 
                     }, 1000);
                 }
                 reader.readAsDataURL(file);
-                // Reset input
                 event.target.value = '';
             }
         }
@@ -1218,13 +1031,11 @@
             const text = input.value.trim();
             if (text === '') return;
             
-            // Lọc text thành chuỗi an toàn để hiển thị
             const safeText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
             addMessage(safeText, 'user');
             input.value = '';
-            removeQuickOptions(); // Đảm bảo ẩn các nút nếu còn
+            removeQuickOptions(); 
             
-            // CHỨC NĂNG TỰ ĐỘNG TRẢ LỜI THEO TỪ KHÓA SẢN PHẨM
             const lowerInput = text.toLowerCase();
             let botReply = "";
 
@@ -1241,24 +1052,20 @@
                 botReply = "Dạ mẫu Túi/Balo này bên shop được làm từ chất liệu cao cấp chống thấm nước nhẹ, bên trong có nhiều ngăn chống sốc rất tiện lợi. Bạn đang thích màu sắc nào ạ?";
             } 
             else if (lowerInput.includes("macbook") || lowerInput.includes("iphone") || lowerInput.includes("tai nghe") || lowerInput.includes("máy") || lowerInput.includes("nồi")) {
-                botReply = "Dạ đối với sản phẩm Công Nghệ / Gia Dụng, Blue Ultra cam kết hàng chính hãng 100%, bảo hành đủ 12 tháng và hỗ trợ 1 đổi 1 trong 30 ngày đầu nếu có lỗi từ nhà sản xuất. Bạn cần tư vấn thêm thông số kỹ thuật nào của dòng này không ạ?";
+                botReply = "Dạ đối với sản phẩm Công Nghệ / Gia Dụng, Blue Ultra cam kết hàng chính hãng 100%, bảo hành đủ 12 tháng và hỗ trợ 1 đổi 1 trong 30 đầu nếu có lỗi từ nhà sản xuất. Bạn cần tư vấn thêm thông số kỹ thuật nào không ạ?";
             } 
             else {
-                // NẾU KHÔNG TÌM THẤY TỪ KHÓA SẢN PHẨM NÀO, CHUYỂN SANG NHÂN VIÊN
                 botReply = "Cảm ơn bạn đã phản hồi! Do thông tin này cần kiểm tra chi tiết hơn, tư vấn viên thật của Blue Ultra đã tiếp nhận và sẽ chat trực tiếp với bạn trong vài giây tới nhé ạ.";
             }
 
-            // Gửi tin nhắn trả lời sau 1 giây
             setTimeout(() => {
                 addMessage(botReply, 'bot');
-                showFollowUpOptions(); // Hiện lại tùy chọn sau khi phản hồi
+                showFollowUpOptions(); 
             }, 1000);
         }
 
         function handleChatEnter(e) {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
+            if (e.key === 'Enter') sendChatMessage();
         }
 
         // ==========================================
