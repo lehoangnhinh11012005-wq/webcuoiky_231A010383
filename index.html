@@ -917,7 +917,7 @@
         }
 
         // ==========================================
-        // TÌM KIẾM VÀ SẮP XẾP SẢN PHẨM
+        // TÌM KIẾM VÀ SẮP XẾP SẢN PHẨM (ĐÃ SỬA LỖI SCROLL)
         // ==========================================
         function scrollToProducts(category, btnElement) {
             let menuItems = document.querySelectorAll('.menu-row li');
@@ -927,8 +927,10 @@
                 btnElement.classList.add('active');
             } else {
                 let targetMenu = Array.from(menuItems).find(li => {
-                    if(category === 'ALL') return li.innerText === 'TẤT CẢ SẢN PHẨM';
-                    return li.innerText === category;
+                    // Dùng textContent.trim() sẽ an toàn hơn innerText trên mobile khi menu đang bị ẩn
+                    let text = li.textContent.trim();
+                    if(category === 'ALL') return text === 'TẤT CẢ SẢN PHẨM';
+                    return text.includes(category);
                 });
                 if(targetMenu) targetMenu.classList.add('active');
             }
@@ -943,12 +945,20 @@
             currentData = filteredData; 
             renderHTML(filteredData);
 
+            // Tăng thời gian delay để đảm bảo HTML render xong trên điện thoại trước khi tính vị trí tọa độ
             setTimeout(() => {
                 const titleSection = document.getElementById('categoryTitleArea');
-                const headerHeight = document.getElementById('mainHeader').offsetHeight;
-                const offsetPosition = titleSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
-                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-            }, 50);
+                if(titleSection) {
+                    const headerHeight = document.getElementById('mainHeader').offsetHeight || 80;
+                    const offsetPosition = titleSection.getBoundingClientRect().top + window.scrollY - headerHeight - 15;
+                    
+                    try {
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    } catch (err) {
+                        window.scrollTo(0, offsetPosition); // Fallback an toàn
+                    }
+                }
+            }, 200); 
         }
 
         function handleSortProducts() {
@@ -980,11 +990,20 @@
                 currentData = searchData;
                 renderHTML(searchData);
                 
-                const titleSection = document.getElementById('categoryTitleArea');
-                const headerHeight = document.getElementById('mainHeader').offsetHeight;
-                window.scrollTo({ top: titleSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20, behavior: 'smooth' });
+                setTimeout(() => {
+                    const titleSection = document.getElementById('categoryTitleArea');
+                    if(titleSection) {
+                        const headerHeight = document.getElementById('mainHeader').offsetHeight || 80;
+                        const offsetPosition = titleSection.getBoundingClientRect().top + window.scrollY - headerHeight - 15;
+                        try {
+                            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                        } catch (err) {
+                            window.scrollTo(0, offsetPosition);
+                        }
+                    }
+                }, 200);
             } else {
-                scrollToProducts('ALL', document.querySelector('.menu-row li:first-child'));
+                scrollToProducts('ALL', document.querySelector('.menu-row li:nth-child(2)'));
             }
         }
 
