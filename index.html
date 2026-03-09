@@ -100,8 +100,8 @@
 
         /* === 3. BANNER SLIDER CHUYỂN ĐỘNG === */
         .slider-wrapper { position: relative; height: 80vh; width: 100%; overflow: hidden; margin-bottom: 50px; }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; cursor: pointer; /* Thêm con trỏ tay */ }
-        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; pointer-events: none; /* FIX: Cho phép click xuyên qua lớp màng đen */ }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; cursor: pointer; /* Cho phép click toàn bộ slide */ }
+        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; pointer-events: none; /* Không cản trở sự kiện click */ }
         .slide.active { opacity: 1; z-index: 3; }
         
         .slide-content { position: relative; z-index: 4; transform: translateY(20px); transition: 0.8s; }
@@ -137,6 +137,7 @@
             transform-style: preserve-3d;
             transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             will-change: transform;
+            cursor: pointer; /* Cho phép con trỏ chuột hiển thị click toàn bộ thẻ */
         }
         
         .product-card:hover { 
@@ -493,7 +494,6 @@
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
             .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
             
-            /* FIX: Căn lại nút Chat và Scroll to Top để không đè lên nút "Thêm vào giỏ" */
             .chat-widget { bottom: 65px; right: 15px; transform: scale(0.85); transform-origin: bottom right;} 
             .floating-action { bottom: 15px; right: 15px; transform: scale(0.75); transform-origin: bottom right;}
         }
@@ -865,6 +865,16 @@
         let selectedOptions = {}; 
         let currentData = products; // Lưu trữ dữ liệu đang được lọc theo Category để dùng cho Sort
 
+        // HÀM MỚI: Xử lý click chuyển trang toàn bộ thẻ sản phẩm
+        function goToProduct(e, id) {
+            // Ngăn chặn chuyển trang nếu click vào các nút chức năng (yêu thích, thêm giỏ, đổi size)
+            if (e.target.closest('.wishlist-btn') || e.target.closest('.btn-add') || e.target.closest('.opt-box')) {
+                return;
+            }
+            // Chuyển hướng
+            window.location.href = `product.html?id=${id}`;
+        }
+
         function renderHTML(dataArray) {
             const grid = document.getElementById('productGrid');
             const wishList = getWishlist();
@@ -892,17 +902,18 @@
                     `;
                 }
 
+                // CẬP NHẬT: Thêm sự kiện onclick="goToProduct" vào div ngoài cùng
                 return `
-                <div class="product-card" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                <div class="product-card" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)" onclick="goToProduct(event, '${p.id}')">
                     <button class="wishlist-btn ${isFavorite ? 'active' : ''}" onclick="toggleWishlist('${p.id}')">
                         <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
                     </button>
-                    <a href="product.html?id=${p.id}">
+                    <a href="product.html?id=${p.id}" onclick="event.preventDefault();">
                         <img src="${p.img}" alt="${p.name}" class="product-img">
                     </a>
                     <div class="product-info">
                         <span class="product-cat">${p.cat}</span>
-                        <a href="product.html?id=${p.id}"><h3 class="product-name">${p.name}</h3></a>
+                        <a href="product.html?id=${p.id}" onclick="event.preventDefault();"><h3 class="product-name">${p.name}</h3></a>
                         
                         <div class="product-price" id="price-display-${p.id}">${formatPrice(p.price)}</div>
                         
@@ -1025,7 +1036,6 @@
         // CÁC HIỆU ỨNG CARD & LOGIC GIỎ HÀNG
         // ==========================================
         function handleTilt(e, card) {
-            // FIX LỖI GHOST TAP: Chặn hiệu ứng thay đổi cấu trúc 3D trên màn hình mobile (gây lỗi mất click)
             if (window.innerWidth <= 900) return;
 
             const cardRect = card.getBoundingClientRect();
@@ -1039,7 +1049,7 @@
         }
 
         function resetTilt(card) {
-            if (window.innerWidth <= 900) return; // FIX
+            if (window.innerWidth <= 900) return; 
             card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         }
 
